@@ -1,2 +1,3 @@
 rootProject.name = 'Gateway'
-
+include 'BmsController'
+include 'Core'
