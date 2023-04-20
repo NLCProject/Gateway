@@ -1,5 +1,6 @@
 buildscript {
     ext {
+        ktorVersion = '2.3.0'
         junitVersion = '5.9.0'
         mySqlVersion = '8.0.30'
         log4jVersion = '2.19.0'
@@ -23,6 +24,7 @@ buildscript {
 
 plugins {
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    id("io.ktor.plugin") version "${ktorVersion}"
 }
 
 apply plugin: 'java'
@@ -41,8 +43,6 @@ test {
 repositories {
     mavenLocal()
     mavenCentral()
-    maven { url "https://jitpack.io" }
-    maven { url "https://packages.atlassian.com/maven/repository/public" }
 }
 
 dependencies {
@@ -51,6 +51,9 @@ dependencies {
     implementation project(':PublicApi')
     implementation project(':StorageApi')
     implementation project(':BmsController')
+    implementation("io.ktor:ktor-server-core:$ktorVersion")
+    implementation("io.ktor:ktor-server-netty:$ktorVersion")
+    implementation("io.ktor:ktor-server-websockets:$ktorVersion")
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
     implementation group: 'org.rxtx', name: 'rxtx', version: '2.1.7'
     implementation("mysql:mysql-connector-java:${mySqlVersion}")

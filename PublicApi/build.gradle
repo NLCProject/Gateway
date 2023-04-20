@@ -24,6 +24,7 @@ buildscript {
 
 plugins {
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    id("io.ktor.plugin") version "${ktorVersion}"
 }
 
 apply plugin: 'java'
@@ -42,8 +43,7 @@ test {
 repositories {
     mavenLocal()
     mavenCentral()
-    maven { url "https://jitpack.io" }
-    maven { url "https://packages.atlassian.com/maven/repository/public" }
+    maven { url = uri("https://maven.pkg.jetbrains.space/public/p/ktor/eap") }
 }
 
 dependencies {
