@@ -16,6 +16,12 @@ abstract class DistributedEntity {
     @Column(nullable = false)
     var timestampCreated: Long = System.currentTimeMillis()
 
+    @Column
+    var timestampLastModified: Long? = null
+
     @Column(nullable = false)
     var dateTimeCreated: ZonedDateTime = ZonedDateTime.now()
+
+    @Column
+    var dateTimeLastModified: ZonedDateTime? = null
 }

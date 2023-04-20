@@ -4,7 +4,7 @@ import org.gateway.utils.validation.ValidationUtil
 import java.util.*
 
 abstract class Repository<ENTITY : DistributedEntity>(
-    protected val repository: ICrudlRepository<ENTITY>,
+    private val repository: ICrudlRepository<ENTITY>,
 ) : RepositoryBaseOperations<ENTITY> {
 
     override fun findAllByIds(ids: List<String>): List<ENTITY> = repository.findAllById(ids).toList()

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class VoltageMeasurementRepository @Autowired constructor(
-    repository: IVoltageMeasurementRepository
+    private val repository: IVoltageMeasurementRepository
 ) : Repository<VoltageMeasurementEntity>(repository = repository) {
 
     private val logger = LoggerFactory.getLogger(this::class.java)

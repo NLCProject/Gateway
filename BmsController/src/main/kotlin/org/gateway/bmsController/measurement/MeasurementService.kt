@@ -15,7 +15,7 @@ class MeasurementService @Autowired constructor(
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     override fun handleData(dto: SerialDataRequest) {
-        logger.info("Handling measurement data by serial number '${dto.serialNumber}' | Value -> ${dto.data}")
+        logger.info("Handling measurement data by serial number '${dto.serialNumber}' | ${dto.data}")
         voltageMeasurementService.saveMeasurement(
             manufacturer = dto.manufacturer,
             serialNumber = dto.serialNumber,
