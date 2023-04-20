@@ -2,5 +2,7 @@ rootProject.name = 'Gateway'
 include 'Core'
 include 'Utils'
 include 'Storage'
+include 'PublicApi'
 include 'StorageApi'
 include 'BmsController'
+

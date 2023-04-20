@@ -20,6 +20,14 @@ class BatterySystemService @Autowired constructor(
         repository.changeStatus(manufacturer = manufacturer, serialNumber = serialNumber, newStatus = newStatus)
     }
 
+    fun findOne(manufacturer: String, serialNumber: String): BatterySystemDto? = repository
+        .findBySerialNumberAndManufacturer(serialNumber = serialNumber, manufacturer = manufacturer)
+        .let { if (it.isPresent) BatterySystemConverter.convert(entity = it.get()) else null }
+
+    fun findAll(): List<BatterySystemDto> = repository
+        .findAll()
+        .map { BatterySystemConverter.convert(entity = it) }
+
     fun findAllByStatus(status: List<SystemStatus>): List<BatterySystemDto> = repository
         .findAllByStatus(status = status)
         .map { BatterySystemConverter.convert(entity = it) }

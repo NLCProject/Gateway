@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.time.ZonedDateTime
+import java.util.*
 
 @Service
 class BatterySystemRepository @Autowired constructor(
@@ -16,11 +17,7 @@ class BatterySystemRepository @Autowired constructor(
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     fun addSystemIfNotExisting(manufacturer: String, serialNumber: String) {
-        val optional = repository.findBySerialNumberAndManufacturer(
-            serialNumber = serialNumber,
-            manufacturer = manufacturer
-        )
-
+        val optional = findBySerialNumberAndManufacturer(serialNumber = serialNumber, manufacturer = manufacturer)
         if (optional.isPresent)
             return changeStatusInternal(system = optional.get(), newStatus = SystemStatus.ONLINE)
 
@@ -35,16 +32,18 @@ class BatterySystemRepository @Autowired constructor(
     }
 
     fun changeStatus(manufacturer: String, serialNumber: String, newStatus: SystemStatus) {
-        val optional = repository.findBySerialNumberAndManufacturer(
-            serialNumber = serialNumber,
-            manufacturer = manufacturer
-        )
-
+        val optional = findBySerialNumberAndManufacturer(serialNumber = serialNumber, manufacturer = manufacturer)
         if (!optional.isPresent)
             return logger.warn("System with serial number '$serialNumber' is unknown")
 
         changeStatusInternal(system = optional.get(), newStatus = newStatus)
     }
+
+    fun findBySerialNumberAndManufacturer(serialNumber: String, manufacturer: String): Optional<BatterySystemEntity> =
+        repository.findBySerialNumberAndManufacturer(
+            serialNumber = serialNumber,
+            manufacturer = manufacturer
+        )
 
     fun findAllByStatus(status: List<SystemStatus>): List<BatterySystemEntity> =
         repository.findAllByStatusIn(status = status)
