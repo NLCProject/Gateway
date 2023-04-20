@@ -1,4 +1,4 @@
-package org.gateway.bmsController
+package org.gateway.utils.serialzation
 
 import kotlinx.serialization.UnsafeSerializationApi
 import kotlinx.serialization.builtins.ListSerializer

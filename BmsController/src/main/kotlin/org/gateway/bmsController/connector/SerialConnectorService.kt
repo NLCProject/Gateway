@@ -1,6 +1,6 @@
 package org.gateway.bmsController.connector
 
-import org.gateway.bmsController.JsonSerialization
+import org.gateway.utils.serialzation.JsonSerialization
 import gnu.io.CommPortIdentifier
 import gnu.io.SerialPort
 import gnu.io.SerialPortEvent

@@ -1,3 +1,6 @@
 rootProject.name = 'Gateway'
-include 'BmsController'
 include 'Core'
+include 'Utils'
+include 'Storage'
+include 'StorageApi'
+include 'BmsController'

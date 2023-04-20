@@ -1,6 +1,6 @@
 package org.gateway.bmsController.connector
 
-import org.gateway.bmsController.JsonSerialization
+import org.gateway.utils.serialzation.JsonSerialization
 import org.gateway.bmsController.measurement.interfaces.IMeasurementService
 import org.gateway.bmsController.connector.dto.SerialDataRequest
 import org.gateway.bmsController.connector.dto.SerialDataCommand

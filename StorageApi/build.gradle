@@ -32,7 +32,7 @@ apply plugin: 'kotlinx-serialization'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
-group = 'org.gateway.bmsController'
+group = 'org.gateway.storageApi'
 
 test {
     useJUnitPlatform()
@@ -46,8 +46,7 @@ repositories {
 }
 
 dependencies {
-    implementation project(':Utils')
-    implementation project(':StorageApi')
+    implementation project(':Storage')
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
     implementation group: 'org.rxtx', name: 'rxtx', version: '2.1.7'
     implementation("mysql:mysql-connector-java:${mySqlVersion}")
