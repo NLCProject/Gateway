@@ -8,6 +8,8 @@ import gnu.io.SerialPortEventListener
 import org.gateway.bmsController.connector.dto.SerialDataResponse
 import org.gateway.bmsController.connector.interfaces.ISerialConnectorService
 import org.gateway.bmsController.connector.interfaces.ISerialDataHandler
+import org.gateway.websocketInternalApi.SessionSender
+import org.gateway.websocketInternalApi.messages.SystemDetected
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -18,6 +20,7 @@ import java.io.OutputStream
 
 @Service
 class SerialConnectorService @Autowired constructor(
+    private val sessionSender: SessionSender,
     private val serialDataHandler: ISerialDataHandler
 ): SerialPortEventListener, ISerialConnectorService, JsonSerialization() {
 
@@ -35,7 +38,7 @@ class SerialConnectorService @Autowired constructor(
     private lateinit var serialPort: SerialPort
     private lateinit var inputStream: InputStream
 
-    @Scheduled(cron = "*/30 * * * * *")
+    @Scheduled(cron = "*/10 * * * * *")
     override fun initialize() {
         try {
             if (started || port.isEmpty() || baudRate.isEmpty()) return
@@ -62,6 +65,8 @@ class SerialConnectorService @Autowired constructor(
             serialPort.addEventListener(this)
             serialPort.notifyOnDataAvailable(true)
             started = true
+
+            sessionSender.sendMessage(message = encode(SystemDetected()))
             logger.info("Serial connector started")
         } catch (exception: Exception) {
             logger.error("Error while starting serial connector | ${exception.message}")

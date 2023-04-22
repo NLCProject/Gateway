@@ -17,9 +17,9 @@ class MeasurementService @Autowired constructor(
     override fun handleData(dto: SerialDataRequest) {
         logger.info("Handling measurement data by serial number '${dto.serialNumber}' | ${dto.data}")
         voltageMeasurementService.saveMeasurement(
+            value = dto.data.toDouble(),
             manufacturer = dto.manufacturer,
-            serialNumber = dto.serialNumber,
-            measuredValue = dto.data.toDouble()
+            serialNumber = dto.serialNumber
         )
     }
 }

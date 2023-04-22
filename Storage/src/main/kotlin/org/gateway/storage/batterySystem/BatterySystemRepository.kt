@@ -3,6 +3,9 @@ package org.gateway.storage.batterySystem
 import org.gateway.storage.batterySystem.interfaces.IBatterySystemRepository
 import org.gateway.storage.framework.Repository
 import org.gateway.utils.battery.enums.SystemStatus
+import org.gateway.websocketInternalApi.SessionSender
+import org.gateway.websocketInternalApi.messages.SystemRegistered
+import org.gateway.websocketInternalApi.messages.SystemStatusChanged
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -11,6 +14,7 @@ import java.util.*
 
 @Service
 class BatterySystemRepository @Autowired constructor(
+    private val sessionSender: SessionSender,
     private val repository: IBatterySystemRepository
 ) : Repository<BatterySystemEntity>(repository = repository) {
 
@@ -29,6 +33,9 @@ class BatterySystemRepository @Autowired constructor(
 
         logger.info("Saving new system with serial number '$serialNumber'")
         repository.save(entity)
+
+        val message = SystemRegistered(serialNumber = serialNumber, manufacturer = manufacturer)
+        sessionSender.sendMessage(message = encode(message))
     }
 
     fun changeStatus(manufacturer: String, serialNumber: String, newStatus: SystemStatus) {
@@ -64,5 +71,13 @@ class BatterySystemRepository @Autowired constructor(
         system.dateTimeLastModified = ZonedDateTime.now()
         system.timestampLastModified = System.currentTimeMillis()
         repository.save(system)
+
+        val message = SystemStatusChanged(
+            serialNumber = system.serialNumber,
+            manufacturer = system.manufacturer,
+            status = newStatus
+        )
+
+        sessionSender.sendMessage(message = encode(message))
     }
 }

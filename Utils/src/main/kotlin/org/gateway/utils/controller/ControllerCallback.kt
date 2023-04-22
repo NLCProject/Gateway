@@ -1,4 +1,4 @@
-package org.gateway.utils.controllers
+package org.gateway.utils.controller
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

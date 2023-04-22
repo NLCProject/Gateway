@@ -4,5 +4,7 @@ include 'Utils'
 include 'Storage'
 include 'PublicApi'
 include 'StorageApi'
+include 'WebsocketApi'
 include 'BmsController'
+include 'WebsocketInternalApi'
 

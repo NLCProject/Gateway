@@ -1,4 +1,4 @@
-package org.gateway.storageApi.configuration
+package org.gateway.websocketInternalApi.configuration
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.domain.EntityScan
@@ -14,6 +14,5 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 @EnableAutoConfiguration
 @EnableTransactionManagement
 @EnableConfigurationProperties
-@EntityScan(basePackages = ["org.gateway.storageApi"])
-@ComponentScan(basePackages = ["org.gateway.storageApi"])
-class StorageApiConfiguration
+@ComponentScan(basePackages = ["org.gateway.websocketInternalApi"])
+class WebsocketInternalApiConfiguration

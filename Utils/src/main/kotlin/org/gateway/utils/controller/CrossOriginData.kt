@@ -1,4 +1,4 @@
-package org.gateway.utils.controllers
+package org.gateway.utils.controller
 
 object CrossOriginData {
 

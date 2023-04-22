@@ -1,11 +1,12 @@
 package org.gateway.storage.framework
 
+import org.gateway.utils.serialzation.JsonSerialization
 import org.gateway.utils.validation.ValidationUtil
 import java.util.*
 
 abstract class Repository<ENTITY : DistributedEntity>(
     private val repository: ICrudlRepository<ENTITY>,
-) : RepositoryBaseOperations<ENTITY> {
+) : RepositoryBaseOperations<ENTITY>, JsonSerialization() {
 
     override fun findAllByIds(ids: List<String>): List<ENTITY> = repository.findAllById(ids).toList()
 

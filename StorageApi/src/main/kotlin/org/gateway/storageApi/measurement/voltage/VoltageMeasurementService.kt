@@ -9,11 +9,11 @@ class VoltageMeasurementService @Autowired constructor(
     private val repository: VoltageMeasurementRepository
 ) {
 
-    fun saveMeasurement(measuredValue: Double, manufacturer: String, serialNumber: String) {
+    fun saveMeasurement(value: Double, manufacturer: String, serialNumber: String) {
         repository.saveMeasurement(
+            value = value,
             serialNumber = serialNumber,
-            manufacturer = manufacturer,
-            measuredValue = measuredValue
+            manufacturer = manufacturer
         )
     }
 }

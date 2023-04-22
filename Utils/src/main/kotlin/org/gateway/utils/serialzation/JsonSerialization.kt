@@ -41,11 +41,15 @@ abstract class JsonSerialization {
 
     @OptIn(UnsafeSerializationApi::class)
     protected inline fun <reified T : Any> encode(model: T): String =
-        parseData(data = Json.encodeToString(T::class.serializer(), model))
+        jsonProperty
+            .encodeToString(T::class.serializer(), model)
+            .also { parseData(data = it) }
 
     @OptIn(UnsafeSerializationApi::class)
     protected inline fun <reified T : Any> encodeList(models: List<T>): String =
-        parseData(data = Json.encodeToString(ListSerializer(T::class.serializer()), models))
+        jsonProperty
+            .encodeToString(ListSerializer(T::class.serializer()), models)
+            .also { parseData(data = it) }
 
     protected fun parseData(data: String): String = data
         .replace("\\", "")

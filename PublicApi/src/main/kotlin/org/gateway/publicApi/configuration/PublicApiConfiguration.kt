@@ -1,4 +1,4 @@
-package org.gateway.bmsController.configuration
+package org.gateway.publicApi.configuration
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.domain.EntityScan
@@ -14,5 +14,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 @EnableAutoConfiguration
 @EnableTransactionManagement
 @EnableConfigurationProperties
-@ComponentScan(basePackages = ["org.gateway.bmsController", "org.gateway.storageApi"])
-class BmsConfiguration
+@EntityScan(basePackages = ["org.gateway.publicApi"])
+@ComponentScan(basePackages = ["org.gateway.publicApi"])
+class PublicApiConfiguration
