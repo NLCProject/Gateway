@@ -27,6 +27,9 @@ class SerialConnectorService @Autowired constructor(
     @Value("\${gateway.bms.port}")
     var port: String = ""
 
+    @Value("\${gateway.bms.port.override}")
+    var overridePort: Boolean = false
+
     @Value("\${gateway.bms.baudRate}")
     var baudRate: String = ""
 
@@ -43,6 +46,9 @@ class SerialConnectorService @Autowired constructor(
         try {
             if (started || port.isEmpty() || baudRate.isEmpty()) return
             logger.info("Starting serial connector")
+
+            if (overridePort)
+                System.setProperty("gnu.io.rxtx.SerialPorts", port)
 
             val portId = getPortId() ?: return logger.info("Could not find port '$port'")
             logger.info("Configuring port '$port'")
