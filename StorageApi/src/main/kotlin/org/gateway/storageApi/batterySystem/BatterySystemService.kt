@@ -22,6 +22,13 @@ class BatterySystemService @Autowired constructor(
         repository.changeStatus(manufacturer = manufacturer, serialNumber = serialNumber, newStatus = newStatus)
     }
 
+    fun findById(id: String): BatterySystemDto {
+        id.ifEmpty { throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid parameters", null) }
+        return repository
+            .findById(id = id)
+            .let { BatterySystemConverter.convert(entity = it) }
+    }
+
     fun findByManufacturerAndSerialNumber(manufacturer: String, serialNumber: String): BatterySystemDto {
         if (manufacturer.isEmpty() && serialNumber.isEmpty())
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid parameters", null)

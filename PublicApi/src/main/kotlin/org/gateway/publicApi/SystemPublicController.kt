@@ -11,14 +11,16 @@ import org.gateway.utils.controller.CrossOriginData
 
 @Controller
 @Transactional
-@RequestMapping(path = ["/system"])
+@RequestMapping(path = ["/api/public/system"])
 @CrossOrigin(origins = [CrossOriginData.origins], allowedHeaders = [CrossOriginData.allowedHeaders])
-class SystemController @Autowired constructor(
+class SystemPublicController @Autowired constructor(
     private val batterySystemService: BatterySystemService
 ) {
 
     @GetMapping(value = ["/findAll"])
-    fun findAll(): ResponseEntity<*> = ControllerCallback.getOperation { batterySystemService.findAll() }
+    fun findAll(): ResponseEntity<*> = ControllerCallback.getOperation {
+        batterySystemService.findAll()
+    }
 
     @GetMapping(value = ["/findByManufacturerAndSerialNumber"])
     fun findByManufacturerAndSerialNumber(
