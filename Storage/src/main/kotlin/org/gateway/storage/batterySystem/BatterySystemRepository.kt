@@ -3,7 +3,7 @@ package org.gateway.storage.batterySystem
 import org.gateway.storage.batterySystem.interfaces.IBatterySystemRepository
 import org.gateway.storage.framework.Repository
 import org.gateway.utils.battery.enums.SystemStatus
-import org.gateway.websocketInternalApi.SessionSender
+import org.gateway.websocketInternalApi.InternalWebsocketSessionSender
 import org.gateway.websocketInternalApi.messages.SystemRegistered
 import org.gateway.websocketInternalApi.messages.SystemStatusChanged
 import org.slf4j.LoggerFactory
@@ -14,8 +14,8 @@ import java.util.*
 
 @Service
 class BatterySystemRepository @Autowired constructor(
-    private val sessionSender: SessionSender,
-    private val repository: IBatterySystemRepository
+    private val repository: IBatterySystemRepository,
+    private val sessionSender: InternalWebsocketSessionSender
 ) : Repository<BatterySystemEntity>(repository = repository) {
 
     private val logger = LoggerFactory.getLogger(this::class.java)
@@ -34,8 +34,8 @@ class BatterySystemRepository @Autowired constructor(
         logger.info("Saving new system with serial number '$serialNumber'")
         repository.save(entity)
 
-        val message = SystemRegistered(serialNumber = serialNumber, manufacturer = manufacturer)
-        sessionSender.sendMessage(message = encode(message))
+        SystemRegistered(serialNumber = serialNumber, manufacturer = manufacturer)
+            .apply { sessionSender.sendMessage(message = this) }
     }
 
     fun changeStatus(manufacturer: String, serialNumber: String, newStatus: SystemStatus) {
@@ -72,12 +72,7 @@ class BatterySystemRepository @Autowired constructor(
         system.timestampLastModified = System.currentTimeMillis()
         repository.save(system)
 
-        val message = SystemStatusChanged(
-            serialNumber = system.serialNumber,
-            manufacturer = system.manufacturer,
-            status = newStatus
-        )
-
-        sessionSender.sendMessage(message = encode(message))
+        SystemStatusChanged(serialNumber = system.serialNumber, manufacturer = system.manufacturer, status = newStatus)
+            .apply { sessionSender.sendMessage(message = this) }
     }
 }

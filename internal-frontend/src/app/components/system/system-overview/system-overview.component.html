@@ -9,12 +9,15 @@
 <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10px" *ngIf="systems.length > 0">
   <mat-card *ngFor="let system of systems" fxLayout="column" fxLayoutAlign="center center">
     <mat-card-header>
-      <div mat-card-avatar class="dot" style="background-color: limegreen; background-size: cover;" *ngIf="system.status.toString() === SystemStatus[SystemStatus.ONLINE]"></div>
-      <div mat-card-avatar class="dot" style="background-color: orange; background-size: cover;" *ngIf="system.status.toString() === SystemStatus[SystemStatus.STANDBY]"></div>
-      <div mat-card-avatar class="dot" style="background-color: red; background-size: cover;" *ngIf="system.status.toString() === SystemStatus[SystemStatus.OFFLINE]"></div>
+      <div mat-card-avatar class="dot" style="background-color: limegreen; background-size: cover;" *ngIf="system.status.toString() === SystemStatus[SystemStatus.ONLINE] || system.status === 1"></div>
+      <div mat-card-avatar class="dot" style="background-color: orange; background-size: cover;" *ngIf="system.status.toString() === SystemStatus[SystemStatus.STANDBY] || system.status === 2"></div>
+      <div mat-card-avatar class="dot" style="background-color: red; background-size: cover;" *ngIf="system.status.toString() === SystemStatus[SystemStatus.OFFLINE] || system.status === 3"></div>
       <mat-card-title>{{ system.manufacturer }}</mat-card-title>
       <mat-card-subtitle>{{ system.serialNumber }}</mat-card-subtitle>
     </mat-card-header>
     <img style="width: 200px;" mat-card-image src="/assets/images/system.png">
+    <mat-card-content>
+      <p><b>{{ getDataBySystem(system) }} V</b></p>
+    </mat-card-content>
   </mat-card>
 </div>

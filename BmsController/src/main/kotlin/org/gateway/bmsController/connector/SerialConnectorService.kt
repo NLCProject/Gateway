@@ -8,7 +8,7 @@ import gnu.io.SerialPortEventListener
 import org.gateway.bmsController.connector.dto.SerialDataResponse
 import org.gateway.bmsController.connector.interfaces.ISerialConnectorService
 import org.gateway.bmsController.connector.interfaces.ISerialDataHandler
-import org.gateway.websocketInternalApi.SessionSender
+import org.gateway.websocketInternalApi.InternalWebsocketSessionSender
 import org.gateway.websocketInternalApi.messages.SystemDetected
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -20,8 +20,8 @@ import java.io.OutputStream
 
 @Service
 class SerialConnectorService @Autowired constructor(
-    private val sessionSender: SessionSender,
-    private val serialDataHandler: ISerialDataHandler
+    private val serialDataHandler: ISerialDataHandler,
+    private val sessionSender: InternalWebsocketSessionSender
 ): SerialPortEventListener, ISerialConnectorService, JsonSerialization() {
 
     @Value("\${gateway.bms.port}")
@@ -72,9 +72,10 @@ class SerialConnectorService @Autowired constructor(
             serialPort.notifyOnDataAvailable(true)
             started = true
 
-            sessionSender.sendMessage(message = encode(SystemDetected()))
+            SystemDetected().apply { sessionSender.sendMessage(message = this) }
             logger.info("Serial connector started")
         } catch (exception: Exception) {
+            closeConnection()
             logger.error("Error while starting serial connector | ${exception.message}")
         }
     }
@@ -92,7 +93,9 @@ class SerialConnectorService @Autowired constructor(
                 inputStream.read(readBuffer)
 
             serialDataHandler.handleData(data = String(readBuffer))
+            Thread.sleep(500)
         } catch (exception: Exception) {
+            closeConnection()
             logger.error("Error while reading serial data | ${exception.message}")
         }
     }
@@ -103,11 +106,14 @@ class SerialConnectorService @Autowired constructor(
             val data = encode(model = dto)
             output.write(data.toByteArray())
         } catch (exception: Exception) {
+            closeConnection()
             logger.error("Error while reading sending data | ${exception.message}")
         }
     }
 
     override fun closeConnection() {
+        started = false
+
         try {
             logger.info("Closing serial connection")
             serialPort.removeEventListener()

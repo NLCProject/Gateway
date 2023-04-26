@@ -19,19 +19,23 @@ class SerialDataHandler @Autowired constructor(
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     override fun handleData(data: String) {
-        try {
-            logger.trace("Received input data | $data")
-            val dto = decode<SerialDataRequest>(data = data)
-            batterySystemService.addSystemIfNotExisting(
-                manufacturer = dto.manufacturer,
-                serialNumber = dto.serialNumber
-            )
+        logger.trace("Received input data | $data")
+        data.split("\r\n")
+            .filter { it.isNotBlank() && it.isNotEmpty() }
+            .forEach {
+                try {
+                    val dto = decode<SerialDataRequest>(data = it)
+                    batterySystemService.addSystemIfNotExisting(
+                        manufacturer = dto.manufacturer,
+                        serialNumber = dto.serialNumber
+                    )
 
-            when (dto.command) {
-                SerialDataCommand.Measurement -> measurementService.handleData(dto = dto)
+                    when (dto.command) {
+                        SerialDataCommand.Measurement -> measurementService.handleData(dto = dto)
+                    }
+                } catch (exception: Exception) {
+                    logger.trace("Error while handling serial data | ${exception.message}")
+                }
             }
-        } catch (exception: Exception) {
-            logger.trace("Error while handling serial data | ${exception.message}")
-        }
     }
 }

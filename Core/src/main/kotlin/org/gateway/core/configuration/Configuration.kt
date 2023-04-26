@@ -22,8 +22,8 @@ import org.gateway.internalApi.configuration.InternalApiConfiguration
     StorageConfiguration::class,
     PublicApiConfiguration::class,
     StorageApiConfiguration::class,
-    BmsControllerConfiguration::class,
     InternalApiConfiguration::class,
+    BmsControllerConfiguration::class,
     WebsocketInternalApiConfiguration::class
 ])
 class Configuration
