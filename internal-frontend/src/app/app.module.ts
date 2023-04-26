@@ -25,6 +25,12 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { SystemOverviewComponent } from './components/system/system-overview/system-overview.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatTabsModule} from '@angular/material/tabs';
+import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -33,11 +39,14 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 @NgModule({
   declarations: [
     AppComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    SystemOverviewComponent,
+    ProgressBarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MatTabsModule,
     MatSlideToggleModule,
     MatTooltipModule,
     HttpClientModule,
@@ -45,13 +54,16 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     MatProgressSpinnerModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
+    MatProgressBarModule,
     FormsModule,
     ReactiveFormsModule,
+    MatMenuModule,
     InfiniteScrollModule,
     LayoutModule,
     MatButtonModule,
     MatCardModule,
     MatDialogModule,
+    MatIconModule,
     MatFormFieldModule,
     MatListModule,
     MatInputModule,

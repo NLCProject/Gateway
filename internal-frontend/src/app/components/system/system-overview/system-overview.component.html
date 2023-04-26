@@ -1,0 +1,20 @@
+<app-progress-bar [loading]="loading"></app-progress-bar>
+
+<div fxLayout="column" fxLayoutAlign="center center" *ngIf="(systems.length === 0) && !loading">
+  <div style="width: 100%; height: 100px;"></div>
+  <h1 class="no-entries">Keine Systeme registriert</h1>
+</div>
+
+<div style="height: 50px;" *ngIf="systems.length > 0"></div>
+<div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10px" *ngIf="systems.length > 0">
+  <mat-card *ngFor="let system of systems" fxLayout="column" fxLayoutAlign="center center">
+    <mat-card-header>
+      <div mat-card-avatar class="dot" style="background-color: limegreen; background-size: cover;" *ngIf="system.status.toString() === SystemStatus[SystemStatus.ONLINE]"></div>
+      <div mat-card-avatar class="dot" style="background-color: orange; background-size: cover;" *ngIf="system.status.toString() === SystemStatus[SystemStatus.STANDBY]"></div>
+      <div mat-card-avatar class="dot" style="background-color: red; background-size: cover;" *ngIf="system.status.toString() === SystemStatus[SystemStatus.OFFLINE]"></div>
+      <mat-card-title>{{ system.manufacturer }}</mat-card-title>
+      <mat-card-subtitle>{{ system.serialNumber }}</mat-card-subtitle>
+    </mat-card-header>
+    <img style="width: 200px;" mat-card-image src="/assets/images/system.png">
+  </mat-card>
+</div>

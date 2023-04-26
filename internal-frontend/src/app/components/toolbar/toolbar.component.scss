@@ -1,0 +1,23 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.menu-button {
+  width: 250px;
+}
+
+::ng-deep .mat-tab-body {
+  height: 100% !important;
+}
+
+::ng-deep .mat-tab-body-wrapper {
+  height: 100%;
+}
+
+mat-tab-group {
+  height: 100%;
+}
+
+mat-tab {
+  height: 100%;
+}

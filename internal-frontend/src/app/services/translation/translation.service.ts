@@ -18,6 +18,10 @@ export class TranslationService {
     this.translateService.use('de');
   }
 
+  public showSnackbarOnError(): void {
+    this.snackBar.open('Interner Fehler', 'OK');
+  }
+
   public showSnackbar(message: string): void {
     this.getTranslation(message).subscribe((translation: string) => {
       this.snackBar.open(translation, '', {

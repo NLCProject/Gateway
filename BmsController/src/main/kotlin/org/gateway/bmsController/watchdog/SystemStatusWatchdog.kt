@@ -48,6 +48,6 @@ class SystemStatusWatchdog @Autowired constructor(
     private fun isExceeded(system: BatterySystemDto, now: ZonedDateTime): Boolean {
         val dateTime = system.dateTimeLastModified ?: system.dateTimeCreated
         val threshold = dateTime.plusSeconds(system.status.timeoutInSeconds.toLong())
-        return threshold >= now
+        return threshold < now
     }
 }
