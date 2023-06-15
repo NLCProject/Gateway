@@ -20,13 +20,19 @@ class InternalWebsocketSessionSender : JsonSerialization() {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     fun sendMessage(message: SystemDetected) {
-        WebsocketMessage(type = MessageType.SystemDetected).apply { sendToInternalSessions(message = this) }
-        sendToPublicSessions(serialized = encode(message))
+        WebsocketMessage(type = MessageType.SystemDetected).apply {
+            val serialized = encode(message)
+            sendToInternalSessions(serialized = serialized)
+            sendToPublicSessions(serialized = serialized)
+        }
     }
 
     fun sendMessage(message: SystemRegistered) {
-        WebsocketMessage(type = MessageType.SystemRegistered).apply { sendToInternalSessions(message = this) }
-        sendToPublicSessions(serialized = encode(message))
+        WebsocketMessage(type = MessageType.SystemRegistered).apply {
+            val serialized = encode(message)
+            sendToInternalSessions(serialized = serialized)
+            sendToPublicSessions(serialized = serialized)
+        }
     }
 
     fun sendMessage(message: SystemStatusChanged) {
@@ -35,9 +41,11 @@ class InternalWebsocketSessionSender : JsonSerialization() {
             manufacturer = message.manufacturer,
             serialNumber = message.serialNumber,
             type = MessageType.SystemStatusChanged
-        ).apply { sendToInternalSessions(message = this) }
-
-        sendToPublicSessions(serialized = encode(message))
+        ).apply {
+            val serialized = encode(message)
+            sendToInternalSessions(serialized = serialized)
+            sendToPublicSessions(serialized = serialized)
+        }
     }
 
     fun sendMessage(message: VoltageMeasurement) {
@@ -46,13 +54,14 @@ class InternalWebsocketSessionSender : JsonSerialization() {
             manufacturer = message.manufacturer,
             serialNumber = message.serialNumber,
             type = MessageType.VoltageMeasurement
-        ).apply { sendToInternalSessions(message = this) }
-
-        sendToPublicSessions(serialized = encode(message))
+        ).apply {
+            val serialized = encode(message)
+            sendToInternalSessions(serialized = serialized)
+            sendToPublicSessions(serialized = serialized)
+        }
     }
 
-    private fun sendToInternalSessions(message: WebsocketMessage) {
-        val serialized = encode(message)
+    private fun sendToInternalSessions(serialized: String) {
         runBlocking {
             logger.trace("Sending internal websocket event")
 

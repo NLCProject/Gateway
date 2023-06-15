@@ -72,7 +72,7 @@ class SerialConnectorService @Autowired constructor(
             serialPort.notifyOnDataAvailable(true)
             started = true
 
-            SystemDetected().apply { sessionSender.sendMessage(message = this) }
+            sessionSender.sendMessage(message = SystemDetected())
             logger.info("Serial connector started")
         } catch (exception: Exception) {
             closeConnection()
