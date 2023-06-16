@@ -3,7 +3,7 @@ import { Observable, Observer } from 'rxjs';
 import { AnonymousSubject } from 'rxjs/internal/Subject';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import {WebsocketMessage} from "../../dto/WebsocketMessage";
+import {WebsocketMessage} from '../../dto/WebsocketMessage';
 
 export interface Message {
   source: string;

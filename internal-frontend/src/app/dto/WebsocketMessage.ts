@@ -1,4 +1,4 @@
-import {MessageType} from "./MessageType";
+import {MessageType} from './MessageType';
 
 export class WebsocketMessage {
   type: MessageType = MessageType.VoltageMeasurement;

@@ -4,8 +4,10 @@ import {BatterySystemDto} from '../../../dto/BatterySystemDto';
 import {TranslationService} from '../../../services/translation/translation.service';
 import {SystemStatus} from 'src/app/dto/SystemStatus';
 import {WebsocketService} from '../../../services/websocket/websocket.service';
-import {MessageType} from "../../../dto/MessageType";
-import {SystemValue} from "../../../dto/SystemValue";
+import {MessageType} from '../../../dto/MessageType';
+import {SystemValue} from '../../../dto/SystemValue';
+import {VoltageMeasurement} from '../../../dto/VoltageMeasurement';
+import {SystemStatusChanged} from "../../../dto/SystemStatusChanged";
 
 @Component({
   selector: 'app-system-overview',
@@ -64,28 +66,30 @@ export class SystemOverviewComponent implements OnInit {
       }
 
       if (message.type.toString() === MessageType[MessageType.SystemStatusChanged]) {
+        const dto = message as unknown as SystemStatusChanged;
         this.systems.forEach(system => {
-          if (system.serialNumber === message.serialNumber && system.manufacturer === message.manufacturer) {
+          if (system.serialNumber === dto?.serialNumber && system.manufacturer === dto?.manufacturer) {
             // @ts-ignore
-            system.status = SystemStatus[message.data]
+            system.status = SystemStatus[dto.status]
           }
         });
       }
 
       if (message.type.toString() === MessageType[MessageType.VoltageMeasurement]) {
+        const dto = message as unknown as VoltageMeasurement;
         let valueFound = false;
         this.values.forEach(value => {
-          if (value.serialNumber === message.serialNumber && value.manufacturer === message.manufacturer) {
-            value.data = message.data;
+          if (value.serialNumber === dto?.serialNumber && value.manufacturer === dto?.manufacturer) {
+            value.data = dto?.value?.toString();
             valueFound = true;
           }
         });
 
-        if (!valueFound) {
+        if (!valueFound && dto) {
           const value = new SystemValue();
-          value.data = message.data;
-          value.manufacturer = message.manufacturer;
-          value.serialNumber = message.serialNumber;
+          value.data = dto?.value?.toString();
+          value.manufacturer = dto?.manufacturer;
+          value.serialNumber = dto?.serialNumber;
           this.values.push(value);
         }
       }
