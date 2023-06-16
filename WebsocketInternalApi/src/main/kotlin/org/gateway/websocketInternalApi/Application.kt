@@ -1,10 +1,10 @@
 package org.gateway.websocketInternalApi
 
 import io.ktor.server.application.*
-import org.gateway.websocketApi.plugins.configureInternalSockets
-import org.gateway.websocketInternalApi.plugins.configurePublicSockets
+import org.gateway.websocketApi.plugins.configurePublicSockets
+import org.gateway.websocketInternalApi.plugins.configureInternalSockets
 
 fun Application.module() {
-    configurePublicSockets()
     configureInternalSockets()
+    configurePublicSockets()
 }

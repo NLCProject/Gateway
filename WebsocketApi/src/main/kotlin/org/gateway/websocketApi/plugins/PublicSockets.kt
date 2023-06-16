@@ -7,9 +7,8 @@ import io.ktor.server.websocket.*
 import kotlinx.coroutines.channels.ClosedReceiveChannelException
 import org.gateway.websocketApi.session.PublicSessionHandler
 import org.slf4j.LoggerFactory
-import java.time.*
 
-fun Application.configureInternalSockets() {
+fun Application.configurePublicSockets() {
     val logger = LoggerFactory.getLogger(this::class.java)
 
     routing {

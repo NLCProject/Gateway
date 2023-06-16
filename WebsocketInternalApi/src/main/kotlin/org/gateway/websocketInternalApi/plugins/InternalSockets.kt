@@ -9,7 +9,7 @@ import org.gateway.websocketInternalApi.session.InternalSessionHandler
 import org.slf4j.LoggerFactory
 import java.time.*
 
-fun Application.configurePublicSockets() {
+fun Application.configureInternalSockets() {
     val logger = LoggerFactory.getLogger(this::class.java)
 
     install(WebSockets) {

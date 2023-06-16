@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Import
 import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.transaction.annotation.EnableTransactionManagement
 import org.gateway.internalApi.configuration.InternalApiConfiguration
+import org.gateway.simulator.configuration.SimulatorConfiguration
 
 @Configuration
 @EnableScheduling
@@ -20,6 +21,7 @@ import org.gateway.internalApi.configuration.InternalApiConfiguration
 @EnableConfigurationProperties
 @Import(value = [
     StorageConfiguration::class,
+    SimulatorConfiguration::class,
     PublicApiConfiguration::class,
     StorageApiConfiguration::class,
     InternalApiConfiguration::class,

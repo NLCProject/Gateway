@@ -25,17 +25,26 @@ class SerialDataHandler @Autowired constructor(
             .forEach {
                 try {
                     val dto = decode<SerialDataRequest>(data = it)
-                    batterySystemService.addSystemIfNotExisting(
-                        manufacturer = dto.manufacturer,
-                        serialNumber = dto.serialNumber
-                    )
-
-                    when (dto.command) {
-                        SerialDataCommand.Measurement -> measurementService.handleData(dto = dto)
-                    }
+                    handleData(dto = dto)
                 } catch (exception: Exception) {
-                    logger.trace("Error while handling serial data | ${exception.message}")
+                    logger.trace("Error while decoding serial data | ${exception.message}")
                 }
             }
+    }
+
+    override fun handleData(dto: SerialDataRequest) {
+        try {
+            logger.trace("Handling serial data of serial number '${dto.serialNumber}'")
+            batterySystemService.addSystemIfNotExisting(
+                manufacturer = dto.manufacturer,
+                serialNumber = dto.serialNumber
+            )
+
+            when (dto.command) {
+                SerialDataCommand.Measurement -> measurementService.handleData(dto = dto)
+            }
+        } catch (exception: Exception) {
+            logger.trace("Error while handling serial data | ${exception.message}")
+        }
     }
 }

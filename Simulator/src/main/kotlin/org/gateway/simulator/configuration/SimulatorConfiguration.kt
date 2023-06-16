@@ -1,4 +1,4 @@
-package org.gateway.bmsController.configuration
+package org.gateway.simulator.configuration
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.domain.EntityScan
@@ -13,6 +13,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 @EnableAutoConfiguration
 @EnableTransactionManagement
 @EnableConfigurationProperties
-@EntityScan(basePackages = ["org.gateway.bmsController"])
-@ComponentScan(basePackages = ["org.gateway.bmsController"])
-class BmsControllerConfiguration
+@EntityScan(basePackages = ["org.gateway.simulator"])
+@ComponentScan(basePackages = ["org.gateway.simulator"])
+class SimulatorConfiguration
