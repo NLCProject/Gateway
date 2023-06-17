@@ -1,4 +1,4 @@
-package org.gateway.utils
+package org.gateway.utils.numbers
 
 import java.math.BigDecimal
 import java.math.RoundingMode

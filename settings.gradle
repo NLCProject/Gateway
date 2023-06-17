@@ -9,4 +9,5 @@ include 'WebsocketApi'
 include 'BmsController'
 include 'WebsocketInternalApi'
 include 'Simulator'
+include 'Adapter'
 

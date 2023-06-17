@@ -1,5 +1,6 @@
 package org.gateway.core.configuration
 
+import org.gateway.adapter.configuration.AdapterConfiguration
 import org.gateway.bmsController.configuration.BmsControllerConfiguration
 import org.gateway.websocketInternalApi.configuration.WebsocketInternalApiConfiguration
 import org.gateway.publicApi.configuration.PublicApiConfiguration
@@ -20,6 +21,7 @@ import org.gateway.simulator.configuration.SimulatorConfiguration
 @EnableTransactionManagement
 @EnableConfigurationProperties
 @Import(value = [
+    AdapterConfiguration::class,
     StorageConfiguration::class,
     SimulatorConfiguration::class,
     PublicApiConfiguration::class,

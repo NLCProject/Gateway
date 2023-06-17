@@ -25,49 +25,57 @@ class VirtualClientSimulator @Autowired constructor(
     private val logger = LoggerFactory.getLogger(this::class.java)
     private val manufacturers = listOf("Joy-It", "Varta", "Duracell", "LG Energy Solution", "Panasonic", "Samsung SDI")
 
-    @Value("\${gateway.bms.numberOfVirtualClients}")
+    @Value("\${simulator.bms.virtualClients}")
     var numberOfVirtualClients: String = ""
 
     @EventListener(ApplicationReadyEvent::class)
     fun loadVirtualClients() {
-        logger.info("Loading virtual clients")
-        val count = numberOfVirtualClients.toIntOrNull() ?: 0
-        clients = (1..count)
-            .map {
-                VirtualClient(
-                    manufacturer = manufacturers.random(),
-                    baseValue = Random.nextDouble(from = 0.3, until = 9.1)
-                )
-            }
-            .onEach { sessionSender.sendMessage(message = SystemDetected()) }
-            .toMutableList()
-            .apply {
-                if (this.size > 0)
-                    isRunning = true
-            }
+        try {
+            logger.info("Loading virtual clients")
+            val count = numberOfVirtualClients.toIntOrNull() ?: 0
+            clients = (1..count)
+                .map {
+                    VirtualClient(
+                        manufacturer = manufacturers.random(),
+                        baseValue = Random.nextDouble(from = 0.3, until = 9.1)
+                    )
+                }
+                .onEach { sessionSender.sendMessage(message = SystemDetected()) }
+                .toMutableList()
+                .apply {
+                    if (this.size > 0)
+                        isRunning = true
+                }
+        } catch (exception: Exception) {
+            logger.error("Error while starting simulator | ${exception.message}")
+        }
     }
 
     @Scheduled(cron = "* * * * * *")
     fun simulate() {
-        if (!isRunning)
-            return
+        try {
+            if (!isRunning)
+                return
 
-        logger.trace("Running simulator for '${clients.size}' virtual clients")
+            logger.trace("Running simulator for '${clients.size}' virtual clients")
 
-        clients
-            .forEach {
-                val min = it.baseValue * 0.95
-                val max = it.baseValue * 1.05
-                val value = Random.nextDouble(from = min, until = max)
+            clients
+                .forEach {
+                    val min = it.baseValue * 0.95
+                    val max = it.baseValue * 1.05
+                    val value = Random.nextDouble(from = min, until = max)
 
-                val dto = SerialDataRequest().apply {
-                    this.data = value.toString()
-                    this.manufacturer = it.manufacturer
-                    this.serialNumber = it.serialNumber
-                    this.command = SerialDataCommand.Measurement
+                    val dto = SerialDataRequest().apply {
+                        this.data = value.toString()
+                        this.manufacturer = it.manufacturer
+                        this.serialNumber = it.serialNumber
+                        this.command = SerialDataCommand.Measurement
+                    }
+
+                    serialDataHandler.handleData(dto = dto)
                 }
-
-                serialDataHandler.handleData(dto = dto)
-            }
+        } catch (exception: Exception) {
+            logger.error("Error while running simulator | ${exception.message}")
+        }
     }
 }
