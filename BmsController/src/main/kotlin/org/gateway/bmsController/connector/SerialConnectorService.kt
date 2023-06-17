@@ -1,6 +1,5 @@
 package org.gateway.bmsController.connector
 
-import org.gateway.utils.serialzation.JsonSerialization
 import gnu.io.CommPortIdentifier
 import gnu.io.SerialPort
 import gnu.io.SerialPortEvent
@@ -8,6 +7,7 @@ import gnu.io.SerialPortEventListener
 import org.gateway.bmsController.connector.dto.SerialDataResponse
 import org.gateway.bmsController.connector.interfaces.ISerialConnectorService
 import org.gateway.bmsController.connector.interfaces.ISerialDataHandler
+import org.gateway.utils.serialzation.JsonSerialization
 import org.gateway.websocketInternalApi.InternalWebsocketSessionSender
 import org.gateway.websocketInternalApi.messages.SystemDetected
 import org.slf4j.LoggerFactory
@@ -22,7 +22,7 @@ import java.io.OutputStream
 class SerialConnectorService @Autowired constructor(
     private val serialDataHandler: ISerialDataHandler,
     private val sessionSender: InternalWebsocketSessionSender
-): SerialPortEventListener, ISerialConnectorService, JsonSerialization() {
+) : SerialPortEventListener, ISerialConnectorService, JsonSerialization() {
 
     @Value("\${gateway.bms.port}")
     var port: String = ""

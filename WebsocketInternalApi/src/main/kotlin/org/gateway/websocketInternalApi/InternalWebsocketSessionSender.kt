@@ -5,12 +5,12 @@ import kotlinx.coroutines.runBlocking
 import org.gateway.utils.serialzation.JsonSerialization
 import org.gateway.websocketApi.session.PublicSessionHandler
 import org.gateway.websocketInternalApi.dto.WebsocketMessage
-import org.gateway.websocketInternalApi.session.InternalSessionHandler
 import org.gateway.websocketInternalApi.messages.SystemDetected
 import org.gateway.websocketInternalApi.messages.SystemRegistered
 import org.gateway.websocketInternalApi.messages.SystemStatusChanged
 import org.gateway.websocketInternalApi.messages.VoltageMeasurement
 import org.gateway.websocketInternalApi.messages.helper.MessageType
+import org.gateway.websocketInternalApi.session.InternalSessionHandler
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 

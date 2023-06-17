@@ -1,7 +1,7 @@
 package org.gateway.bmsController.measurement
 
-import org.gateway.bmsController.measurement.interfaces.IMeasurementService
 import org.gateway.bmsController.connector.dto.SerialDataRequest
+import org.gateway.bmsController.measurement.interfaces.IMeasurementService
 import org.gateway.storageApi.measurement.voltage.VoltageMeasurementService
 import org.gateway.utils.numbers.ValueRoundUtil
 import org.slf4j.LoggerFactory

@@ -1,11 +1,11 @@
 package org.gateway.bmsController.connector
 
-import org.gateway.utils.serialzation.JsonSerialization
-import org.gateway.bmsController.measurement.interfaces.IMeasurementService
-import org.gateway.bmsController.connector.dto.SerialDataRequest
 import org.gateway.bmsController.connector.dto.SerialDataCommand
+import org.gateway.bmsController.connector.dto.SerialDataRequest
 import org.gateway.bmsController.connector.interfaces.ISerialDataHandler
+import org.gateway.bmsController.measurement.interfaces.IMeasurementService
 import org.gateway.storageApi.batterySystem.BatterySystemService
+import org.gateway.utils.serialzation.JsonSerialization
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service
 class SerialDataHandler @Autowired constructor(
     private val measurementService: IMeasurementService,
     private val batterySystemService: BatterySystemService
-): ISerialDataHandler, JsonSerialization() {
+) : ISerialDataHandler, JsonSerialization() {
 
     private val logger = LoggerFactory.getLogger(this::class.java)
 
