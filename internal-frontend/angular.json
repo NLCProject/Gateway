@@ -28,6 +28,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/assets/fonts/helvetica-fonts.scss",
               "src/styles.scss"
             ],
             "scripts": []
