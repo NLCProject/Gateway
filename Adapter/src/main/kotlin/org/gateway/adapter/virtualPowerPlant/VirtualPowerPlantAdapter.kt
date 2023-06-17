@@ -46,7 +46,9 @@ class VirtualPowerPlantAdapter {
 
             logger.info("Starting virtual power plant adapter")
             val dto = VirtualPowerPlantAdapterDto().apply {
+                this.websocketPort = 8081
                 this.gatewayHost = serverHost
+                this.gatewayUrl = "api/public"
                 this.gatewayPort = validServerPort
                 this.serialNumber = SystemConfiguration.serialNumber
             }
