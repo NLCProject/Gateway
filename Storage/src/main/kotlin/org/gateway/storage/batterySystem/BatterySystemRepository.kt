@@ -32,7 +32,7 @@ class BatterySystemRepository @Autowired constructor(
         }
 
         logger.info("Saving new system with serial number '$serialNumber'")
-        repository.save(entity)
+        this.save(entity)
 
         SystemRegistered(serialNumber = serialNumber, manufacturer = manufacturer)
             .apply { sessionSender.sendMessage(message = this) }
@@ -59,7 +59,7 @@ class BatterySystemRepository @Autowired constructor(
         logger.trace("Updating modified timestamp")
         system.dateTimeLastModified = ZonedDateTime.now()
         system.timestampLastModified = System.currentTimeMillis()
-        repository.save(system)
+        this.save(system)
     }
 
     private fun changeStatusInternal(system: BatterySystemEntity, newStatus: SystemStatus) {
@@ -70,7 +70,7 @@ class BatterySystemRepository @Autowired constructor(
         system.status = newStatus
         system.dateTimeLastModified = ZonedDateTime.now()
         system.timestampLastModified = System.currentTimeMillis()
-        repository.save(system)
+        this.save(system)
 
         SystemStatusChanged(serialNumber = system.serialNumber, manufacturer = system.manufacturer, status = newStatus)
             .apply { sessionSender.sendMessage(message = this) }

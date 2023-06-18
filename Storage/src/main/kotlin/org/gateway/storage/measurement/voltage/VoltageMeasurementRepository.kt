@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class VoltageMeasurementRepository @Autowired constructor(
-    private val repository: IVoltageMeasurementRepository,
+    repository: IVoltageMeasurementRepository,
     private val sessionSender: InternalWebsocketSessionSender
 ) : Repository<VoltageMeasurementEntity>(repository = repository) {
 
@@ -24,7 +24,7 @@ class VoltageMeasurementRepository @Autowired constructor(
         }
 
         logger.info("Saving voltage measurement | $value")
-        repository.save(entity)
+        this.save(entity)
 
         VoltageMeasurement(serialNumber = serialNumber, manufacturer = manufacturer, value = value)
             .apply { sessionSender.sendMessage(message = this) }
