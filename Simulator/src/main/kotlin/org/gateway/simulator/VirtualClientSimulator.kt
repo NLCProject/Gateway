@@ -3,6 +3,7 @@ package org.gateway.simulator
 import org.gateway.bmsController.connector.dto.SerialDataCommand
 import org.gateway.bmsController.connector.dto.SerialDataRequest
 import org.gateway.bmsController.connector.interfaces.ISerialDataHandler
+import org.gateway.simulator.configuration.VirtualBatteries
 import org.gateway.websocketInternalApi.InternalWebsocketSessionSender
 import org.gateway.websocketInternalApi.messages.SystemDetected
 import org.slf4j.LoggerFactory
@@ -21,31 +22,16 @@ class VirtualClientSimulator @Autowired constructor(
 ) {
 
     private var isRunning = false
-    private var clients = mutableListOf<VirtualClient>()
     private val logger = LoggerFactory.getLogger(this::class.java)
-    private val manufacturers = listOf("Joy-It", "Varta", "Duracell", "LG Energy Solution", "Panasonic", "Samsung SDI")
-
-    @Value("\${simulator.bms.virtualClients}")
-    var numberOfVirtualClients: String = ""
 
     @EventListener(ApplicationReadyEvent::class)
     fun loadVirtualClients() {
         try {
             logger.info("Loading virtual clients")
-            val count = numberOfVirtualClients.toIntOrNull() ?: 0
-            clients = (1..count)
-                .map {
-                    VirtualClient(
-                        manufacturer = manufacturers.random(),
-                        baseValue = Random.nextDouble(from = 0.3, until = 9.1)
-                    )
-                }
+            VirtualBatteries
+                .clients
                 .onEach { sessionSender.sendMessage(message = SystemDetected()) }
-                .toMutableList()
-                .apply {
-                    if (this.size > 0)
-                        isRunning = true
-                }
+                .apply { if (this.isNotEmpty()) isRunning = true }
         } catch (exception: Exception) {
             logger.error("Error while starting simulator | ${exception.message}")
         }
@@ -57,12 +43,11 @@ class VirtualClientSimulator @Autowired constructor(
             if (!isRunning)
                 return
 
-            logger.trace("Running simulator for '${clients.size}' virtual clients")
-
-            clients
+            VirtualBatteries
+                .clients
                 .forEach {
-                    val min = it.baseValue * 0.95
-                    val max = it.baseValue * 1.05
+                    val min = it.voltage * it.lowerDispersion
+                    val max = it.voltage * it.upperDispersion
                     val value = Random.nextDouble(from = min, until = max)
 
                     val dto = SerialDataRequest().apply {
