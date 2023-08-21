@@ -7,10 +7,11 @@ import org.gateway.websocketInternalApi.messages.VoltageMeasurement
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.util.Optional
 
 @Service
 class VoltageMeasurementRepository @Autowired constructor(
-    repository: IVoltageMeasurementRepository,
+    private val repository: IVoltageMeasurementRepository,
     private val sessionSender: InternalWebsocketSessionSender
 ) : Repository<VoltageMeasurementEntity>(repository = repository) {
 
@@ -18,9 +19,9 @@ class VoltageMeasurementRepository @Autowired constructor(
 
     fun saveMeasurement(value: Double, manufacturer: String, serialNumber: String) {
         val entity = VoltageMeasurementEntity().apply {
+            this.measuredValue = value
             this.manufacturer = manufacturer
             this.serialNumber = serialNumber
-            this.measuredValue = value
         }
 
         logger.info("Saving voltage measurement | $value")
@@ -29,4 +30,7 @@ class VoltageMeasurementRepository @Autowired constructor(
         VoltageMeasurement(serialNumber = serialNumber, manufacturer = manufacturer, value = value)
             .apply { sessionSender.sendMessage(message = this) }
     }
+
+    fun getLatestBySerialNumber(serialNumber: String): Optional<VoltageMeasurementEntity> =
+        repository.getFirstBySerialNumberOrderByTimestampCreatedDesc(serialNumber)
 }

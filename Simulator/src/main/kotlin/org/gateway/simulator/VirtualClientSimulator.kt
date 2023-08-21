@@ -21,12 +21,18 @@ class VirtualClientSimulator @Autowired constructor(
     private val sessionSender: InternalWebsocketSessionSender
 ) {
 
+    @Value("\${gateway.bms.simulator.enabled}")
+    var enabled: String = ""
+
     private var isRunning = false
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     @EventListener(ApplicationReadyEvent::class)
     fun loadVirtualClients() {
         try {
+            if (!enabled.toBoolean())
+                return
+
             logger.info("Loading virtual clients")
             VirtualBatteries
                 .clients
@@ -48,7 +54,7 @@ class VirtualClientSimulator @Autowired constructor(
                 .forEach {
                     val min = it.voltage * it.lowerDispersion
                     val max = it.voltage * it.upperDispersion
-                    val value = Random.nextDouble(from = min, until = max)
+                    val value = if (min == max) min else Random.nextDouble(from = min, until = max)
 
                     val dto = SerialDataRequest().apply {
                         this.data = value.toString()
