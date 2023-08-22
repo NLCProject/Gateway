@@ -17,7 +17,15 @@
     </mat-card-header>
     <img style="width: 200px;" mat-card-image src="/assets/images/system.png">
     <mat-card-content>
-      <p><b>{{ getDataBySystem(system) }} V</b></p>
+      <p><b>{{ 'Voltage' | translate }}</b>: {{ getDataBySystem(system) }} V</p>
+      <p><b>{{ 'Consumer Group' | translate }}</b>: {{ system!!.group!!.name | translate }}</p>
+      <p><b>{{ 'Wiring Mode' | translate }}</b>: {{ system!!.group!!.wiring!!.toString() | translate }}</p>
+      <div style="width: 100%; height: 15px; margin-bottom: 10px;" fxLayoutAlign="center center" fxLayout="row" fxLayoutGap="10px">
+        <p><b>{{ 'Consumer Mode' | translate }}</b>: {{ system!!.group!!.mode!!.toString() | translate }}</p>
+        <mat-icon *ngIf="system?.group?.mode?.toString() === ConsumerMode[ConsumerMode.None]">trending_flat</mat-icon>
+        <mat-icon *ngIf="system?.group?.mode?.toString() === ConsumerMode[ConsumerMode.Loading]" style="color: green">trending_up</mat-icon>
+        <mat-icon *ngIf="system?.group?.mode?.toString() === ConsumerMode[ConsumerMode.Consuming]" style="color: red">trending_down</mat-icon>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

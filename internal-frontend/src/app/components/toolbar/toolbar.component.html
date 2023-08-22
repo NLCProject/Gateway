@@ -1,24 +1,9 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <span>Gateway</span>
-    <span class="spacer"></span>
-    <button mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon>menu</mat-icon>
-    </button>
-  </mat-toolbar-row>
-</mat-toolbar>
-
 <mat-tab-group [(selectedIndex)]="selectedTab" mat-align-tabs="center">
   <mat-tab label="Systeme" fxFlex="90">
     <app-system-overview *ngIf="selectedTab === 0"></app-system-overview>
   </mat-tab>
-</mat-tab-group>
 
-<mat-menu #menu="matMenu">
-  <button
-    class="menu-button"
-    mat-menu-item>
-    <mat-icon>person</mat-icon>
-    <span>Login</span>
-  </button>
-</mat-menu>
+  <mat-tab label="Gruppen" fxFlex="90">
+    <app-consumer-overview *ngIf="selectedTab === 1"></app-consumer-overview>
+  </mat-tab>
+</mat-tab-group>

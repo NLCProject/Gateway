@@ -8,6 +8,7 @@ import {MessageType} from '../../../dto/MessageType';
 import {SystemValue} from '../../../dto/SystemValue';
 import {VoltageMeasurement} from '../../../dto/VoltageMeasurement';
 import {SystemStatusChanged} from "../../../dto/SystemStatusChanged";
+import { ConsumerMode } from 'src/app/dto/ConsumerMode';
 
 @Component({
   selector: 'app-system-overview',
@@ -24,6 +25,7 @@ export class SystemOverviewComponent implements OnInit {
     this.handleWebsocketMessage();
   }
 
+  public ConsumerMode = ConsumerMode;
   public values: SystemValue[] = [];
   public systems: BatterySystemDto[] = [];
   public SystemStatus = SystemStatus;

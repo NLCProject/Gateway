@@ -4,7 +4,7 @@ import {ConsumerMode} from "./ConsumerMode";
 import {BatterySystemDto} from "./BatterySystemDto";
 
 export class ConsumerGroupDto extends Dto {
-  name = '';
+  name: string = '';
   voltage = 0;
   standard = false;
   mode: ConsumerMode = ConsumerMode.None;

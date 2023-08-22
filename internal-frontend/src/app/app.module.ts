@@ -31,6 +31,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatTabsModule} from '@angular/material/tabs';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { ConsumerOverviewComponent } from './components/system/consumer-overview/consumer-overview.component';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -41,7 +42,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     AppComponent,
     ToolbarComponent,
     SystemOverviewComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    ConsumerOverviewComponent
   ],
   imports: [
     BrowserModule,
