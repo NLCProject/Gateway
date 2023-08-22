@@ -35,6 +35,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { ConsumerOverviewComponent } from './components/system/consumer-overview/consumer-overview.component';
 import { ConsumerGroupComponent } from './components/system/consumer-overview/consumer-group/consumer-group.component';
 import { ProgressBarDialogComponent } from './components/progress-bar-dialog/progress-bar-dialog.component';
+import { GroupSelectionComponent } from './components/system/system-overview/group-selection/group-selection.component';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -48,7 +49,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     ProgressBarComponent,
     ConsumerOverviewComponent,
     ConsumerGroupComponent,
-    ProgressBarDialogComponent
+    ProgressBarDialogComponent,
+    GroupSelectionComponent
   ],
   imports: [
     BrowserModule,

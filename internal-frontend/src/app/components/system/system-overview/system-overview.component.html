@@ -9,6 +9,7 @@
 <div fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="systems.length > 0">
   <mat-card *ngFor="let system of systems" fxLayout="column" fxLayoutAlign="center center">
     <mat-card-header>
+      <mat-icon style="cursor: pointer;" (click)="openDialog(system)">edit</mat-icon>
       <div mat-card-avatar class="dot" style="background-color: limegreen; background-size: cover;" *ngIf="system?.status?.toString() === SystemStatus[SystemStatus.ONLINE] || system?.status === 1"></div>
       <div mat-card-avatar class="dot" style="background-color: orange; background-size: cover;" *ngIf="system?.status?.toString() === SystemStatus[SystemStatus.STANDBY] || system?.status === 2"></div>
       <div mat-card-avatar class="dot" style="background-color: red; background-size: cover;" *ngIf="system?.status?.toString() === SystemStatus[SystemStatus.OFFLINE] || system?.status === 3"></div>

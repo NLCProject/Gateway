@@ -13,4 +13,9 @@ export class SystemService extends RestHeaderService {
     const url = `${this.getBaseUrl(this.path)}/findAll`;
     return this.http.get<BatterySystemDto[]>(url, this.getHeaders());
   }
+
+  public moveToGroup(systemId: string, groupId: string): Observable<void> {
+    const url = `${this.getBaseUrl(this.path)}/moveToGroup?systemId=${systemId}&groupId=${groupId}`;
+    return this.http.post<void>(url, null, this.getHeaders());
+  }
 }

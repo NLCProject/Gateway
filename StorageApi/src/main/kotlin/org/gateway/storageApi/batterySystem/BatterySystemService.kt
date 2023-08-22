@@ -2,9 +2,11 @@ package org.gateway.storageApi.batterySystem
 
 import org.gateway.storage.batterySystem.BatterySystemEntity
 import org.gateway.storage.batterySystem.BatterySystemRepository
+import org.gateway.storage.consumerGroup.ConsumerGroupRepository
 import org.gateway.storageApi.batterySystem.converter.BatterySystemConverter
 import org.gateway.storageApi.batterySystem.dto.BatterySystemDto
 import org.gateway.utils.battery.enums.SystemStatus
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -12,8 +14,11 @@ import org.springframework.web.server.ResponseStatusException
 
 @Service
 class BatterySystemService @Autowired constructor(
-    private val repository: BatterySystemRepository
+    private val repository: BatterySystemRepository,
+    private val consumerGroupRepository: ConsumerGroupRepository
 ) {
+
+    private val logger = LoggerFactory.getLogger(this::class.java)
 
     fun addSystemIfNotExisting(manufacturer: String, serialNumber: String): BatterySystemEntity =
         repository.addSystemIfNotExisting(manufacturer = manufacturer, serialNumber = serialNumber)
@@ -22,11 +27,11 @@ class BatterySystemService @Autowired constructor(
         repository.changeStatus(manufacturer = manufacturer, serialNumber = serialNumber, newStatus = newStatus)
     }
 
-    fun findById(id: String): BatterySystemDto {
-        id.ifEmpty { throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid parameters", null) }
-        return repository
-            .findById(id = id)
-            .let { BatterySystemConverter.convert(entity = it) }
+    fun moveToGroup(systemId: String, groupId: String) {
+        logger.info("Moving system ID '$systemId' to group ID '$groupId'")
+        val system = repository.findById(systemId)
+        system.group = consumerGroupRepository.findById(groupId)
+        repository.save(system)
     }
 
     fun findByManufacturerAndSerialNumber(manufacturer: String, serialNumber: String): BatterySystemDto {

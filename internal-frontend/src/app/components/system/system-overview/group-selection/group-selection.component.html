@@ -1,0 +1,33 @@
+<form [formGroup]="formGroup!!" fxLayoutAlign="center center" fxLayoutGap="10px" fxLayout="column">
+
+<h2>{{ 'Consumer Group' | translate }}</h2>
+  <div style="width: 100%; height: 20px;"></div>
+
+  <mat-form-field appearance="fill">
+    <mat-label>{{ 'Consumer Group' | translate }}</mat-label>
+    <mat-select required formControlName="group">
+      <mat-option *ngFor="let group of groups" [value]="group">{{ group.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div style="width: 100%; height: 20px;"></div>
+
+  <div class="full-width button-shadow button-detail-container"
+       fxLayoutAlign="center end"
+       fxLayoutGap="10px"
+       fxLayout="row">
+    <button mat-fab
+            color="accent"
+            (click)="save()"
+            [disabled]="loading || !formGroup!!.valid"
+            [class.spinner]="loading">
+      <mat-icon>save</mat-icon>
+    </button>
+
+    <button mat-fab matDialogClose color="primary">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <app-progress-bar-dialog [loading]="loading"></app-progress-bar-dialog>
+</form>

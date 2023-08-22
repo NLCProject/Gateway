@@ -9,6 +9,8 @@ import {SystemValue} from '../../../dto/SystemValue';
 import {VoltageMeasurement} from '../../../dto/VoltageMeasurement';
 import {SystemStatusChanged} from "../../../dto/SystemStatusChanged";
 import { ConsumerMode } from 'src/app/dto/ConsumerMode';
+import {GroupSelectionComponent} from "./group-selection/group-selection.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-system-overview',
@@ -18,6 +20,7 @@ import { ConsumerMode } from 'src/app/dto/ConsumerMode';
 export class SystemOverviewComponent implements OnInit {
 
   constructor(
+    private dialog: MatDialog,
     private systemService: SystemService,
     private translationService: TranslationService,
     private websocketService: WebsocketService
@@ -33,6 +36,16 @@ export class SystemOverviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadData();
+  }
+
+  public openDialog(system: BatterySystemDto): void {
+    const promptDialog = this.dialog.open(GroupSelectionComponent, {
+      data: { group: system.group, id: system.id }
+    });
+
+    promptDialog.afterClosed().subscribe(() => {
+      this.loadData();
+    });
   }
 
   public getDataBySystem(system: BatterySystemDto): string {

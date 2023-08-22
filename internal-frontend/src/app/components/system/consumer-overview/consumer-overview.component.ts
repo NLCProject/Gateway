@@ -45,20 +45,16 @@ export class ConsumerOverviewComponent implements OnInit {
       data: { group }
     });
 
-    promptDialog.afterClosed().subscribe(result => {
-      if (result) {
-        this.loadData();
-      }
+    promptDialog.afterClosed().subscribe(() => {
+      this.loadData();
     });
   }
 
   public openDialogOnNew(): void {
     const promptDialog = this.dialog.open(ConsumerGroupComponent);
 
-    promptDialog.afterClosed().subscribe(result => {
-      if (result) {
-        this.loadData();
-      }
+    promptDialog.afterClosed().subscribe(() => {
+      this.loadData();
     });
   }
 

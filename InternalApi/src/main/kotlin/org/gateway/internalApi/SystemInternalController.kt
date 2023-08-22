@@ -21,4 +21,10 @@ class SystemInternalController @Autowired constructor(
     fun findAll(): ResponseEntity<*> = ControllerCallback.getOperation {
         batterySystemService.findAll()
     }
+
+    @PostMapping(value = ["/moveToGroup"])
+    fun moveToGroup(@RequestParam systemId: String, groupId: String): ResponseEntity<*> =
+        ControllerCallback.postOperation {
+            batterySystemService.moveToGroup(systemId = systemId, groupId = groupId)
+        }
 }
