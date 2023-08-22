@@ -1,6 +1,6 @@
-package org.gateway.publicApi
+package org.gateway.internalApi
 
-import org.gateway.storage.consumerGroup.ConsumerMode
+import org.gateway.storage.consumerGroup.WiringMode
 import org.gateway.storageApi.consumerGroup.ConsumerGroupService
 import org.gateway.utils.controller.ControllerCallback
 import org.gateway.utils.controller.CrossOriginData
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*
 @Transactional
 @RequestMapping(path = ["/api/public/consumer"])
 @CrossOrigin(origins = [CrossOriginData.origins], allowedHeaders = [CrossOriginData.allowedHeaders])
-class ConsumerPublicController @Autowired constructor(
+class ConsumerInternalController @Autowired constructor(
     private val consumerGroupService: ConsumerGroupService
 ) {
 
@@ -23,9 +23,9 @@ class ConsumerPublicController @Autowired constructor(
         consumerGroupService.findAll()
     }
 
-    @PostMapping(value = ["/changeConsumerMode"])
-    fun changeConsumerMode(@RequestParam groupId: String, @RequestParam mode: ConsumerMode): ResponseEntity<*> =
+    @PostMapping(value = ["/changeWiringMode"])
+    fun changeWiringMode(@RequestParam groupId: String, @RequestParam mode: WiringMode): ResponseEntity<*> =
         ControllerCallback.postOperation {
-            consumerGroupService.changeConsumerMode(groupId = groupId, mode = mode)
+            consumerGroupService.changeWiringMode(groupId = groupId, mode = mode)
         }
 }
