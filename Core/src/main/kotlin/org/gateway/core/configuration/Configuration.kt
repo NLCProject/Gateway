@@ -5,7 +5,6 @@ import org.gateway.bmsController.configuration.BmsControllerConfiguration
 import org.gateway.internalApi.configuration.InternalApiConfiguration
 import org.gateway.publicApi.configuration.PublicApiConfiguration
 import org.gateway.simulator.configuration.SimulatorConfiguration
-import org.gateway.smartHomeBridge.configuration.SmartHomeBridgeConfiguration
 import org.gateway.storage.configuration.StorageConfiguration
 import org.gateway.storageApi.configuration.StorageApiConfiguration
 import org.gateway.websocketInternalApi.configuration.WebsocketInternalApiConfiguration
@@ -30,7 +29,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
         StorageApiConfiguration::class,
         InternalApiConfiguration::class,
         BmsControllerConfiguration::class,
-        SmartHomeBridgeConfiguration::class,
         WebsocketInternalApiConfiguration::class
     ]
 )

@@ -3,7 +3,6 @@ package org.gateway.storageApi.batterySystem
 import org.gateway.storage.batterySystem.BatterySystemEntity
 import org.gateway.storage.batterySystem.BatterySystemRepository
 import org.gateway.storageApi.batterySystem.converter.BatterySystemConverter
-import org.gateway.storageApi.batterySystem.dto.BatteryParameterSummaryDto
 import org.gateway.storageApi.batterySystem.dto.BatterySystemDto
 import org.gateway.utils.battery.enums.SystemStatus
 import org.springframework.beans.factory.annotation.Autowired

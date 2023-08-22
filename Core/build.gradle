@@ -55,7 +55,6 @@ dependencies {
     implementation project(':InternalApi')
     implementation project(':WebsocketApi')
     implementation project(':BmsController')
-    implementation project(':SmartHomeBridge')
     implementation project(':WebsocketInternalApi')
     implementation("io.ktor:ktor-server-core:$ktorVersion")
     implementation("io.ktor:ktor-server-netty:$ktorVersion")

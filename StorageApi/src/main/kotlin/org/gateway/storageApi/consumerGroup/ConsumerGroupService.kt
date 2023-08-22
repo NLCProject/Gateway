@@ -20,6 +20,10 @@ class ConsumerGroupService @Autowired constructor(
         .findAll()
         .map { ConsumerGroupConverter.convert(it) }
 
+    fun findById(groupId: String): ConsumerGroupDto = consumerGroupRepository
+        .findById(groupId)
+        .let { ConsumerGroupConverter.convert(it) }
+
     fun changeConsumerMode(groupId: String, mode: ConsumerMode) {
         logger.info("Changing consumer mode from group ID '$groupId' to '$mode'")
         val group = consumerGroupRepository.findById(groupId)

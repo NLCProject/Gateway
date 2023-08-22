@@ -10,5 +10,4 @@ include 'BmsController'
 include 'WebsocketInternalApi'
 include 'Simulator'
 include 'Adapter'
-include 'SmartHomeBridge'
 

@@ -23,6 +23,11 @@ class ConsumerPublicController @Autowired constructor(
         consumerGroupService.findAll()
     }
 
+    @GetMapping(value = ["/findById"])
+    fun findById(@RequestParam groupId: String): ResponseEntity<*> = ControllerCallback.getOperation {
+        consumerGroupService.findById(groupId)
+    }
+
     @PostMapping(value = ["/changeConsumerMode"])
     fun changeConsumerMode(@RequestParam groupId: String, @RequestParam mode: ConsumerMode): ResponseEntity<*> =
         ControllerCallback.postOperation {
