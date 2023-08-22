@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*
 
 @Controller
 @Transactional
-@RequestMapping(path = ["/api/public/consumer"])
+@RequestMapping(path = ["/api/internal/consumer"])
 @CrossOrigin(origins = [CrossOriginData.origins], allowedHeaders = [CrossOriginData.allowedHeaders])
 class ConsumerInternalController @Autowired constructor(
     private val consumerGroupService: ConsumerGroupService

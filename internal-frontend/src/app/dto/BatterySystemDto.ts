@@ -1,9 +1,11 @@
 import {SystemStatus} from './SystemStatus';
 import {Dto} from './Dto';
+import {ConsumerGroupDto} from "./ConsumerGroupDto";
 
 export class BatterySystemDto extends Dto {
-  status: SystemStatus = SystemStatus.ONLINE;
+  value = '';
   manufacturer = '';
   serialNumber = '';
-  value = '';
+  group: ConsumerGroupDto | null = null;
+  status: SystemStatus = SystemStatus.ONLINE;
 }

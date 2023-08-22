@@ -21,11 +21,4 @@ class SystemInternalController @Autowired constructor(
     fun findAll(): ResponseEntity<*> = ControllerCallback.getOperation {
         batterySystemService.findAll()
     }
-
-    @GetMapping(value = ["/findById"])
-    fun findById(
-        @RequestParam id: String
-    ): ResponseEntity<*> = ControllerCallback.getOperation {
-        batterySystemService.findById(id = id)
-    }
 }
