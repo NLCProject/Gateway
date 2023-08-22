@@ -4,6 +4,8 @@ import org.gateway.bmsController.connector.dto.SerialDataCommand
 import org.gateway.bmsController.connector.dto.SerialDataRequest
 import org.gateway.bmsController.connector.interfaces.ISerialDataHandler
 import org.gateway.simulator.configuration.VirtualBatteries
+import org.gateway.storage.batterySystem.BatterySystemRepository
+import org.gateway.storage.consumerGroup.ConsumerMode
 import org.gateway.websocketInternalApi.InternalWebsocketSessionSender
 import org.gateway.websocketInternalApi.messages.SystemDetected
 import org.slf4j.LoggerFactory
@@ -18,7 +20,8 @@ import kotlin.random.Random
 @Service
 class VirtualClientSimulator @Autowired constructor(
     private val serialDataHandler: ISerialDataHandler,
-    private val sessionSender: InternalWebsocketSessionSender
+    private val sessionSender: InternalWebsocketSessionSender,
+    private val batterySystemRepository: BatterySystemRepository
 ) {
 
     @Value("\${gateway.bms.simulator.enabled}")
@@ -49,12 +52,29 @@ class VirtualClientSimulator @Autowired constructor(
             if (!isRunning)
                 return
 
+            val systems = batterySystemRepository.findAll()
+
             VirtualBatteries
                 .clients
                 .forEach {
-                    val min = it.voltage * it.lowerDispersion
-                    val max = it.voltage * it.upperDispersion
-                    val value = if (min == max) min else Random.nextDouble(from = min, until = max)
+                    val consumerMode = systems
+                        .firstOrNull { system -> system.serialNumber == it.serialNumber }
+                        ?.group
+                        ?.mode
+                        ?: ConsumerMode.None
+
+                    val value = when (consumerMode) {
+                        ConsumerMode.None -> it.voltage
+                        ConsumerMode.Loading -> {
+                            val max = it.voltage * it.upperDispersion
+                            if (it.voltage == max) max else Random.nextDouble(from = it.voltage, until = max)
+                        }
+
+                        ConsumerMode.Consuming -> {
+                            val min = it.voltage * it.lowerDispersion
+                            if (it.voltage == min) min else Random.nextDouble(from = min, until = it.voltage)
+                        }
+                    }.coerceIn(minimumValue = 0.0, maximumValue = 25.0)
 
                     val dto = SerialDataRequest().apply {
                         this.data = value.toString()

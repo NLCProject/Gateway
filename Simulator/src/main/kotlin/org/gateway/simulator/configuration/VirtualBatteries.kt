@@ -25,7 +25,7 @@ object VirtualBatteries {
         ),
 
         VirtualBattery(
-            voltage = 0.0,
+            voltage = 10.0,
             lowerDispersion = 1.0,
             upperDispersion = 1.0,
             manufacturer = "LG Energy Solution"

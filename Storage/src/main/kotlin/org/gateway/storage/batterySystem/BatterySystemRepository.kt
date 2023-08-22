@@ -1,6 +1,8 @@
 package org.gateway.storage.batterySystem
 
 import org.gateway.storage.batterySystem.interfaces.IBatterySystemRepository
+import org.gateway.storage.consumerGroup.ConsumerGroupRepository
+import org.gateway.storage.consumerGroup.interfaces.IConsumerGroupRepository
 import org.gateway.storage.framework.Repository
 import org.gateway.utils.battery.enums.SystemStatus
 import org.gateway.websocketInternalApi.InternalWebsocketSessionSender
@@ -15,27 +17,33 @@ import java.util.*
 @Service
 class BatterySystemRepository @Autowired constructor(
     private val repository: IBatterySystemRepository,
+    private val consumerRepository: ConsumerGroupRepository,
     private val sessionSender: InternalWebsocketSessionSender
 ) : Repository<BatterySystemEntity>(repository = repository) {
 
     private val logger = LoggerFactory.getLogger(this::class.java)
 
-    fun addSystemIfNotExisting(manufacturer: String, serialNumber: String) {
+    fun addSystemIfNotExisting(manufacturer: String, serialNumber: String): BatterySystemEntity {
         val optional = findBySerialNumberAndManufacturer(serialNumber = serialNumber, manufacturer = manufacturer)
-        if (optional.isPresent)
-            return changeStatusInternal(system = optional.get(), newStatus = SystemStatus.ONLINE)
+        if (optional.isPresent) {
+            changeStatusInternal(system = optional.get(), newStatus = SystemStatus.ONLINE)
+            return optional.get()
+        }
 
         val entity = BatterySystemEntity().apply {
             this.manufacturer = manufacturer
             this.serialNumber = serialNumber
             this.status = SystemStatus.ONLINE
+            this.group = consumerRepository.findOrCreateDefaultGroup()
         }
 
         logger.info("Saving new system with serial number '$serialNumber'")
-        this.save(entity)
-
-        SystemRegistered(serialNumber = serialNumber, manufacturer = manufacturer)
-            .apply { sessionSender.sendMessage(message = this) }
+        return this
+            .save(entity)
+            .apply {
+                SystemRegistered(serialNumber = serialNumber, manufacturer = manufacturer)
+                    .apply { sessionSender.sendMessage(message = this) }
+            }
     }
 
     fun changeStatus(manufacturer: String, serialNumber: String, newStatus: SystemStatus) {

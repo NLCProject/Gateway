@@ -1,5 +1,6 @@
 package org.gateway.storage.measurement.voltage
 
+import org.gateway.storage.batterySystem.BatterySystemEntity
 import org.gateway.storage.framework.Repository
 import org.gateway.storage.measurement.voltage.interfaces.IVoltageMeasurementRepository
 import org.gateway.websocketInternalApi.InternalWebsocketSessionSender
@@ -17,8 +18,9 @@ class VoltageMeasurementRepository @Autowired constructor(
 
     private val logger = LoggerFactory.getLogger(this::class.java)
 
-    fun saveMeasurement(value: Double, manufacturer: String, serialNumber: String) {
+    fun saveMeasurement(value: Double, manufacturer: String, serialNumber: String, system: BatterySystemEntity) {
         val entity = VoltageMeasurementEntity().apply {
+            this.system = system
             this.measuredValue = value
             this.manufacturer = manufacturer
             this.serialNumber = serialNumber

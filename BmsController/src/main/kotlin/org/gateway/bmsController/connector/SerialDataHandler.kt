@@ -35,13 +35,13 @@ class SerialDataHandler @Autowired constructor(
     override fun handleData(dto: SerialDataRequest) {
         try {
             logger.trace("Handling serial data of serial number '${dto.serialNumber}'")
-            batterySystemService.addSystemIfNotExisting(
+            val system = batterySystemService.addSystemIfNotExisting(
                 manufacturer = dto.manufacturer,
                 serialNumber = dto.serialNumber
             )
 
             when (dto.command) {
-                SerialDataCommand.Measurement -> measurementService.handleData(dto = dto)
+                SerialDataCommand.Measurement -> measurementService.handleData(dto = dto, system = system)
             }
         } catch (exception: Exception) {
             logger.trace("Error while handling serial data | ${exception.message}")

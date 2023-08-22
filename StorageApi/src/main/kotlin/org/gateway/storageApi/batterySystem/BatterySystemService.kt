@@ -1,5 +1,6 @@
 package org.gateway.storageApi.batterySystem
 
+import org.gateway.storage.batterySystem.BatterySystemEntity
 import org.gateway.storage.batterySystem.BatterySystemRepository
 import org.gateway.storageApi.batterySystem.converter.BatterySystemConverter
 import org.gateway.storageApi.batterySystem.dto.BatteryParameterSummaryDto
@@ -15,9 +16,8 @@ class BatterySystemService @Autowired constructor(
     private val repository: BatterySystemRepository
 ) {
 
-    fun addSystemIfNotExisting(manufacturer: String, serialNumber: String) {
+    fun addSystemIfNotExisting(manufacturer: String, serialNumber: String): BatterySystemEntity =
         repository.addSystemIfNotExisting(manufacturer = manufacturer, serialNumber = serialNumber)
-    }
 
     fun changeStatus(manufacturer: String, serialNumber: String, newStatus: SystemStatus) {
         repository.changeStatus(manufacturer = manufacturer, serialNumber = serialNumber, newStatus = newStatus)
