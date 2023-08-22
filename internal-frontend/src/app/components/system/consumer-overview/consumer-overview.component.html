@@ -1,1 +1,28 @@
-<p>consumer-overview works!</p>
+<app-progress-bar [loading]="loading"></app-progress-bar>
+
+<div fxLayout="column" fxLayoutAlign="center center" *ngIf="(groups.length === 0) && !loading">
+  <div style="width: 100%; height: 100px;"></div>
+  <h1 class="no-entries">Keine Gruppen registriert</h1>
+</div>
+
+<div style="height: 50px;" *ngIf="groups.length > 0"></div>
+<div fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="groups.length > 0">
+  <mat-card *ngFor="let group of groups" fxLayout="column" fxLayoutAlign="center center">
+    <mat-card-header>
+      <mat-icon style="cursor: pointer;">edit</mat-icon>
+      <mat-card-title>{{ group!!.name }}</mat-card-title>
+      <mat-card-subtitle>{{ group!!.systems!!.length }} {{ 'Systems' | translate }}</mat-card-subtitle>
+    </mat-card-header>
+    <img style="width: 200px;" mat-card-image src="/assets/images/system.png">
+    <mat-card-content>
+      <p><b>{{ 'Voltage' | translate }}</b>: {{ group!!.voltage }} V</p>
+      <p><b>{{ 'Wiring Mode' | translate }}</b>: {{ group!!.wiring!!.toString() | translate }}</p>
+      <div style="width: 100%; height: 15px; margin-bottom: 10px;" fxLayoutAlign="center center" fxLayout="row" fxLayoutGap="10px">
+        <p><b>{{ 'Consumer Mode' | translate }}</b>: {{ group!!.mode!!.toString() | translate }}</p>
+        <mat-icon *ngIf="group?.mode?.toString() === ConsumerMode[ConsumerMode.None]">trending_flat</mat-icon>
+        <mat-icon *ngIf="group?.mode?.toString() === ConsumerMode[ConsumerMode.Loading]" style="color: green">trending_up</mat-icon>
+        <mat-icon *ngIf="group?.mode?.toString() === ConsumerMode[ConsumerMode.Consuming]" style="color: red">trending_down</mat-icon>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

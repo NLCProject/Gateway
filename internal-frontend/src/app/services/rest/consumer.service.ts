@@ -7,7 +7,7 @@ import {WiringMode} from '../../dto/WiringMode';
 @Injectable({
   providedIn: 'root'
 })
-export class SystemService extends RestHeaderService {
+export class ConsumerService extends RestHeaderService {
   path = 'consumer';
 
   public findAll(): Observable<ConsumerGroupDto[]> {

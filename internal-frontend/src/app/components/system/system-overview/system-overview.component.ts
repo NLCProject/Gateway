@@ -25,18 +25,21 @@ export class SystemOverviewComponent implements OnInit {
     this.handleWebsocketMessage();
   }
 
-  public ConsumerMode = ConsumerMode;
-  public values: SystemValue[] = [];
-  public systems: BatterySystemDto[] = [];
-  public SystemStatus = SystemStatus;
   public loading = true;
+  public values: SystemValue[] = [];
+  public SystemStatus = SystemStatus;
+  public ConsumerMode = ConsumerMode;
+  public systems: BatterySystemDto[] = [];
 
   ngOnInit(): void {
     this.loadData();
   }
 
   public getDataBySystem(system: BatterySystemDto): string {
-    const value = this.values.find(value => value.serialNumber === system.serialNumber && value.manufacturer === system.manufacturer)?.data;
+    const value = this.values.find(value => {
+      return value.serialNumber === system.serialNumber && value.manufacturer === system.manufacturer
+    })?.data;
+
     if (value) {
       return value;
     }
