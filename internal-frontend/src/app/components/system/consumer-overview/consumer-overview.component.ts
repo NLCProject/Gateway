@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {TranslationService} from "../../../services/translation/translation.service";
-import {SystemValue} from "../../../dto/SystemValue";
-import {ConsumerService} from "../../../services/rest/consumer.service";
+import {TranslationService} from '../../../services/translation/translation.service';
+import {SystemValue} from '../../../dto/SystemValue';
+import {ConsumerGroupService} from '../../../services/rest/consumer-group.service';
 import { ConsumerMode } from 'src/app/dto/ConsumerMode';
-import {ConsumerGroupDto} from "../../../dto/ConsumerGroupDto";
+import {ConsumerGroupDto} from '../../../dto/ConsumerGroupDto';
+import {ConsumerGroupComponent} from './consumer-group/consumer-group.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-consumer-overview',
@@ -13,7 +15,8 @@ import {ConsumerGroupDto} from "../../../dto/ConsumerGroupDto";
 export class ConsumerOverviewComponent implements OnInit {
 
   constructor(
-    private consumerService: ConsumerService,
+    private dialog: MatDialog,
+    private consumerService: ConsumerGroupService,
     private translationService: TranslationService
   ) { }
 
@@ -35,6 +38,28 @@ export class ConsumerOverviewComponent implements OnInit {
     if (this.interval) {
       clearInterval(this.interval);
     }
+  }
+
+  public openDialog(group: ConsumerGroupDto): void {
+    const promptDialog = this.dialog.open(ConsumerGroupComponent, {
+      data: { group }
+    });
+
+    promptDialog.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadData();
+      }
+    });
+  }
+
+  public openDialogOnNew(): void {
+    const promptDialog = this.dialog.open(ConsumerGroupComponent);
+
+    promptDialog.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadData();
+      }
+    });
   }
 
   private loadData(): void {

@@ -23,9 +23,9 @@ class ConsumerInternalController @Autowired constructor(
         consumerGroupService.findAll()
     }
 
-    @PostMapping(value = ["/changeWiringMode"])
-    fun changeWiringMode(@RequestParam groupId: String, @RequestParam mode: WiringMode): ResponseEntity<*> =
+    @PostMapping(value = ["/save"])
+    fun save(@RequestParam groupId: String, @RequestParam name: String, @RequestParam mode: WiringMode): ResponseEntity<*> =
         ControllerCallback.postOperation {
-            consumerGroupService.changeWiringMode(groupId = groupId, mode = mode)
+            consumerGroupService.saveInternal(groupId = groupId, name = name, mode = mode)
         }
 }

@@ -16,3 +16,14 @@ h1, h2, h3, h4 {
 p, span {
   font-family: 'helvetica-regular';
 }
+
+app-progress-bar-dialog {
+  width: 100%;
+}
+
+.action-bar {
+  z-index: 1;
+  bottom: 40px !important;
+  right: 40px !important;
+  position: absolute !important;
+}

@@ -7,7 +7,7 @@ import {WiringMode} from '../../dto/WiringMode';
 @Injectable({
   providedIn: 'root'
 })
-export class ConsumerService extends RestHeaderService {
+export class ConsumerGroupService extends RestHeaderService {
   path = 'consumer';
 
   public findAll(): Observable<ConsumerGroupDto[]> {
@@ -15,8 +15,8 @@ export class ConsumerService extends RestHeaderService {
     return this.http.get<ConsumerGroupDto[]>(url, this.getHeaders());
   }
 
-  public changeWiringMode(groupId: string, mode: WiringMode): Observable<void> {
-    const url = `${this.getBaseUrl(this.path)}/changeWiringMode?groupId=${groupId}&mode=${mode}`;
+  public save(groupId: string, name: string, mode: WiringMode): Observable<void> {
+    const url = `${this.getBaseUrl(this.path)}/save?groupId=${groupId}&mode=${mode}&name=${name}`;
     return this.http.post<void>(url, null, this.getHeaders());
   }
 }

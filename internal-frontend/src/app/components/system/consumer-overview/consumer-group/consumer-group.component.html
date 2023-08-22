@@ -1,0 +1,37 @@
+<form [formGroup]="formGroup!!" fxLayoutAlign="center center" fxLayoutGap="10px" fxLayout="column">
+
+  <h2>{{ 'Consumer Group' | translate }}</h2>
+  <div style="width: 100%; height: 20px;"></div>
+
+  <mat-form-field>
+    <input matInput required placeholder="{{ 'Name' | translate }}" formControlName="name">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>{{ 'Wiring Mode' | translate }}</mat-label>
+    <mat-select required formControlName="wiring">
+      <mat-option *ngFor="let mode of getMode()" [value]="mode">{{ mode | translate }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div style="width: 100%; height: 20px;"></div>
+
+  <div class="full-width button-shadow button-detail-container"
+       fxLayoutAlign="center end"
+       fxLayoutGap="10px"
+       fxLayout="row">
+    <button mat-fab
+            color="accent"
+            (click)="save()"
+            [disabled]="loading || !formGroup!!.valid"
+            [class.spinner]="loading">
+      <mat-icon>save</mat-icon>
+    </button>
+
+    <button mat-fab matDialogClose color="primary">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <app-progress-bar-dialog [loading]="loading"></app-progress-bar-dialog>
+</form>

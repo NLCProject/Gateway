@@ -9,7 +9,7 @@
 <div fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="groups.length > 0">
   <mat-card *ngFor="let group of groups" fxLayout="column" fxLayoutAlign="center center">
     <mat-card-header>
-      <mat-icon style="cursor: pointer;">edit</mat-icon>
+      <mat-icon style="cursor: pointer;" (click)="openDialog(group)">edit</mat-icon>
       <mat-card-title>{{ group!!.name }}</mat-card-title>
       <mat-card-subtitle>{{ group!!.systems!!.length }} {{ 'Systems' | translate }}</mat-card-subtitle>
     </mat-card-header>
@@ -26,3 +26,10 @@
     </mat-card-content>
   </mat-card>
 </div>
+
+<button mat-fab
+        (click)="openDialogOnNew()"
+        class="action-bar"
+        color="primary">
+  <mat-icon>add</mat-icon>
+</button>

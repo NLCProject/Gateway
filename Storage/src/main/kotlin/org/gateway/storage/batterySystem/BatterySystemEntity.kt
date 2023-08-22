@@ -23,6 +23,6 @@ class BatterySystemEntity : DistributedEntity() {
     @JoinColumn(name = "consumer_group_id")
     lateinit var group: ConsumerGroupEntity
 
-    @OneToMany(cascade = [CascadeType.MERGE], mappedBy = "system")
+    @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.MERGE], mappedBy = "system")
     var measurements = mutableListOf<VoltageMeasurementEntity>()
 }

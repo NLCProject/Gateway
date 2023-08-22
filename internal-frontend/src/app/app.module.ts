@@ -21,6 +21,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import {MatSelectModule} from '@angular/material/select';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,6 +33,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { ConsumerOverviewComponent } from './components/system/consumer-overview/consumer-overview.component';
+import { ConsumerGroupComponent } from './components/system/consumer-overview/consumer-group/consumer-group.component';
+import { ProgressBarDialogComponent } from './components/progress-bar-dialog/progress-bar-dialog.component';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -43,7 +46,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     ToolbarComponent,
     SystemOverviewComponent,
     ProgressBarComponent,
-    ConsumerOverviewComponent
+    ConsumerOverviewComponent,
+    ConsumerGroupComponent,
+    ProgressBarDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -63,6 +68,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     InfiniteScrollModule,
     LayoutModule,
     MatButtonModule,
+    MatSelectModule,
     MatCardModule,
     MatDialogModule,
     MatIconModule,

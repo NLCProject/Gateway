@@ -20,6 +20,6 @@ class ConsumerGroupEntity : DistributedEntity() {
     @Column(nullable = false)
     var standard: Boolean = false
 
-    @OneToMany(cascade = [CascadeType.MERGE], mappedBy = "group")
+    @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.MERGE], mappedBy = "group")
     var systems = mutableListOf<BatterySystemEntity>()
 }

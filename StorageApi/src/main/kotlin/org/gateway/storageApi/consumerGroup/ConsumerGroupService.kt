@@ -1,5 +1,6 @@
 package org.gateway.storageApi.consumerGroup
 
+import org.gateway.storage.consumerGroup.ConsumerGroupEntity
 import org.gateway.storage.consumerGroup.ConsumerGroupRepository
 import org.gateway.storage.consumerGroup.ConsumerMode
 import org.gateway.storage.consumerGroup.WiringMode
@@ -31,9 +32,10 @@ class ConsumerGroupService @Autowired constructor(
         consumerGroupRepository.save(group)
     }
 
-    fun changeWiringMode(groupId: String, mode: WiringMode) {
-        logger.info("Changing wiring mode from group ID '$groupId' to '$mode'")
-        val group = consumerGroupRepository.findById(groupId)
+    fun saveInternal(groupId: String, name: String, mode: WiringMode) {
+        logger.info("Saving consumer group ID '$groupId' to '$mode'")
+        val group = if (groupId.isEmpty()) ConsumerGroupEntity() else consumerGroupRepository.findById(groupId)
+        group.name = name
         group.wiring = mode
         consumerGroupRepository.save(group)
     }
