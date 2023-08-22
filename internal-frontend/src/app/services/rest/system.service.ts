@@ -13,9 +13,4 @@ export class SystemService extends RestHeaderService {
     const url = `${this.getBaseUrl(this.path)}/findAll`;
     return this.http.get<BatterySystemDto[]>(url, this.getHeaders());
   }
-
-  public findById(id: string): Observable<BatterySystemDto> {
-    const url = `${this.getBaseUrl(this.path)}/findById?id=${id}`;
-    return this.http.get<BatterySystemDto>(url, this.getHeaders());
-  }
 }

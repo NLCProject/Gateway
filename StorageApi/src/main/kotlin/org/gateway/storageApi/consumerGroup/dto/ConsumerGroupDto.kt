@@ -11,5 +11,5 @@ class ConsumerGroupDto : Dto() {
     var standard: Boolean = false
     lateinit var mode: ConsumerMode
     lateinit var wiring: WiringMode
-    lateinit var systems: List<BatterySystemDto>
+    var systems: List<BatterySystemDto> = emptyList()
 }
