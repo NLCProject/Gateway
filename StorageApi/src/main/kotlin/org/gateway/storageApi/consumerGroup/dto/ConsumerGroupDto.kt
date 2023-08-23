@@ -8,6 +8,7 @@ import org.gateway.storageApi.dto.Dto
 class ConsumerGroupDto : Dto() {
     lateinit var name: String
     var voltage: Double = 0.0
+    var gatewayId: String = ""
     var standard: Boolean = false
     lateinit var mode: ConsumerMode
     lateinit var wiring: WiringMode

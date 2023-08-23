@@ -6,6 +6,7 @@ import org.gateway.storage.consumerGroup.WiringMode
 import org.gateway.storageApi.batterySystem.converter.BatterySystemConverter
 import org.gateway.storageApi.consumerGroup.dto.ConsumerGroupDto
 import org.gateway.storageApi.dto.DtoConverter
+import kotlin.math.roundToInt
 
 object ConsumerGroupConverter {
 
@@ -24,7 +25,7 @@ object ConsumerGroupConverter {
         mode = entity.mode
         wiring = entity.wiring
         standard = entity.standard
-        voltage = calculateVoltage(entity)
+        voltage = (calculateVoltage(entity) * 100.0).roundToInt() / 100.0
         DtoConverter.convert(entity = entity, dto = this)
     }
 

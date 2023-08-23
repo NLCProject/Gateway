@@ -20,7 +20,9 @@ class ConsumerPublicController @Autowired constructor(
 
     @GetMapping(value = ["/findAll"])
     fun findAll(): ResponseEntity<*> = ControllerCallback.getOperation {
-        consumerGroupService.findAll()
+        consumerGroupService
+            .findAll()
+            .sortedBy { it.id }
     }
 
     @GetMapping(value = ["/findById"])

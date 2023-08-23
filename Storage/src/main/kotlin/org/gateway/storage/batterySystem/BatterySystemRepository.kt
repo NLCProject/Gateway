@@ -65,7 +65,6 @@ class BatterySystemRepository @Autowired constructor(
 
     private fun updateModifiedTimestamp(system: BatterySystemEntity) {
         logger.trace("Updating modified timestamp")
-        system.dateTimeLastModified = ZonedDateTime.now()
         system.timestampLastModified = System.currentTimeMillis()
         this.save(system)
     }
@@ -76,7 +75,6 @@ class BatterySystemRepository @Autowired constructor(
 
         logger.info("Changing status of system with serial number '${system.serialNumber}' to '$newStatus'")
         system.status = newStatus
-        system.dateTimeLastModified = ZonedDateTime.now()
         system.timestampLastModified = System.currentTimeMillis()
         this.save(system)
 

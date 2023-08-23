@@ -18,7 +18,7 @@ class SystemStatusWatchdog @Autowired constructor(
 
     @Scheduled(cron = "*/2 * * * * *")
     fun verifySystemStatus() {
-        val now = ZonedDateTime.now()
+        val now = System.currentTimeMillis()
         logger.debug("Verifying system status")
 
         batterySystemService
@@ -33,7 +33,7 @@ class SystemStatusWatchdog @Autowired constructor(
             }
     }
 
-    private fun handleSystem(system: BatterySystemDto, now: ZonedDateTime, newStatus: SystemStatus) {
+    private fun handleSystem(system: BatterySystemDto, now: Long, newStatus: SystemStatus) {
         val exceeded = isExceeded(system = system, now = now)
         if (exceeded) {
             logger.warn("System with serial number '${system.serialNumber}' is inactive. New status is '$newStatus'")
@@ -45,9 +45,9 @@ class SystemStatusWatchdog @Autowired constructor(
         }
     }
 
-    private fun isExceeded(system: BatterySystemDto, now: ZonedDateTime): Boolean {
-        val dateTime = system.dateTimeLastModified ?: system.dateTimeCreated
-        val threshold = dateTime.plusSeconds(system.status.timeoutInSeconds.toLong())
+    private fun isExceeded(system: BatterySystemDto, now: Long): Boolean {
+        val dateTime = system.timestampLastModified ?: system.timestampCreated
+        val threshold = dateTime + system.status.timeoutInSeconds.toLong().times(1000)
         return threshold < now
     }
 }

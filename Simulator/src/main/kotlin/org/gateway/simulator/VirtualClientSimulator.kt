@@ -57,23 +57,22 @@ class VirtualClientSimulator @Autowired constructor(
             VirtualBatteries
                 .clients
                 .forEach {
-                    val consumerMode = systems
-                        .firstOrNull { system -> system.serialNumber == it.serialNumber }
+                    val system = systems.firstOrNull { system -> system.serialNumber == it.serialNumber }
+                    val consumerMode = system
                         ?.group
                         ?.mode
                         ?: ConsumerMode.None
 
-                    val value = when (consumerMode) {
-                        ConsumerMode.None -> it.voltage
-                        ConsumerMode.Loading -> {
-                            val max = it.voltage * it.upperDispersion
-                            if (it.voltage == max) max else Random.nextDouble(from = it.voltage, until = max)
-                        }
+                    val voltage = system
+                        ?.measurements
+                        ?.maxByOrNull { measurement -> measurement.timestampCreated }
+                        ?.measuredValue
+                        ?: it.voltage
 
-                        ConsumerMode.Consuming -> {
-                            val min = it.voltage * it.lowerDispersion
-                            if (it.voltage == min) min else Random.nextDouble(from = min, until = it.voltage)
-                        }
+                    val value = when (consumerMode) {
+                        ConsumerMode.None -> voltage
+                        ConsumerMode.Loading -> voltage * it.upperDispersion
+                        ConsumerMode.Consuming -> voltage * it.lowerDispersion
                     }.coerceIn(minimumValue = 0.0, maximumValue = 25.0)
 
                     val dto = SerialDataRequest().apply {

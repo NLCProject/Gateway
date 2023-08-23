@@ -19,7 +19,9 @@ class SystemInternalController @Autowired constructor(
 
     @GetMapping(value = ["/findAll"])
     fun findAll(): ResponseEntity<*> = ControllerCallback.getOperation {
-        batterySystemService.findAll()
+        batterySystemService
+            .findAll()
+            .sortedBy { it.id }
     }
 
     @PostMapping(value = ["/moveToGroup"])
