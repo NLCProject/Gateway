@@ -6,12 +6,15 @@ import org.gateway.storage.consumerGroup.ConsumerMode
 import org.gateway.storage.consumerGroup.WiringMode
 import org.gateway.storageApi.consumerGroup.converter.ConsumerGroupConverter
 import org.gateway.storageApi.consumerGroup.dto.ConsumerGroupDto
+import org.gateway.websocketInternalApi.InternalWebsocketSessionSender
+import org.gateway.websocketInternalApi.messages.ConsumerGroupsChanged
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
 class ConsumerGroupService @Autowired constructor(
+    private val sessionSender: InternalWebsocketSessionSender,
     private val consumerGroupRepository: ConsumerGroupRepository
 ) {
 
@@ -30,6 +33,7 @@ class ConsumerGroupService @Autowired constructor(
         val group = consumerGroupRepository.findById(groupId)
         group.mode = mode
         consumerGroupRepository.save(group)
+        sessionSender.sendMessage(ConsumerGroupsChanged())
     }
 
     fun saveInternal(groupId: String, name: String, mode: WiringMode) {
@@ -38,5 +42,6 @@ class ConsumerGroupService @Autowired constructor(
         group.name = name
         group.wiring = mode
         consumerGroupRepository.save(group)
+        sessionSender.sendMessage(ConsumerGroupsChanged())
     }
 }

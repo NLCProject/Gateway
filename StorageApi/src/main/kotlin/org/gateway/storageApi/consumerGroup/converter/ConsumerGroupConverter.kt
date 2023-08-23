@@ -15,7 +15,7 @@ object ConsumerGroupConverter {
         mode = entity.mode
         wiring = entity.wiring
         standard = entity.standard
-        voltage = calculateVoltage(entity)
+        voltage = (calculateVoltage(entity) * 100.0).roundToInt() / 100.0
         systems = entity.systems.map { BatterySystemConverter.convertOnSubLevel(it) }
         DtoConverter.convert(entity = entity, dto = this)
     }

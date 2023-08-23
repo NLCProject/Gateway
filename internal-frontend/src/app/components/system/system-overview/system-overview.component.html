@@ -16,7 +16,7 @@
       <mat-card-title>{{ system?.manufacturer }}</mat-card-title>
       <mat-card-subtitle>{{ system?.serialNumber }}</mat-card-subtitle>
     </mat-card-header>
-    <img style="width: 200px;" mat-card-image src="/assets/images/system.png">
+    <img style="width: 180px;" mat-card-image src="/assets/images/system.png">
     <mat-card-content>
       <p><b>{{ 'Voltage' | translate }}</b>: {{ getDataBySystem(system) }} V</p>
       <p><b>{{ 'Consumer Group' | translate }}</b>: {{ system!!.group!!.name }}</p>

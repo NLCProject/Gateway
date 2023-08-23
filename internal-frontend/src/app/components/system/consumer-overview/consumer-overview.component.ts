@@ -57,7 +57,6 @@ export class ConsumerOverviewComponent implements OnInit, OnDestroy {
   }
 
   private loadData(): void {
-    this.loading = true;
     this.consumerService.findAll().subscribe(
       response => {
         this.groups = response;

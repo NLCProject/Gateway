@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 enum class MessageType {
     SystemDetected,
     SystemRegistered,
+    VoltageMeasurement,
     SystemStatusChanged,
-    VoltageMeasurement
+    ConsumerGroupsChanged
 }

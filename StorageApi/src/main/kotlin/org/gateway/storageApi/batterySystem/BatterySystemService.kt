@@ -6,6 +6,8 @@ import org.gateway.storage.consumerGroup.ConsumerGroupRepository
 import org.gateway.storageApi.batterySystem.converter.BatterySystemConverter
 import org.gateway.storageApi.batterySystem.dto.BatterySystemDto
 import org.gateway.utils.battery.enums.SystemStatus
+import org.gateway.websocketInternalApi.InternalWebsocketSessionSender
+import org.gateway.websocketInternalApi.messages.ConsumerGroupsChanged
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -15,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException
 @Service
 class BatterySystemService @Autowired constructor(
     private val repository: BatterySystemRepository,
+    private val sessionSender: InternalWebsocketSessionSender,
     private val consumerGroupRepository: ConsumerGroupRepository
 ) {
 
@@ -32,6 +35,7 @@ class BatterySystemService @Autowired constructor(
         val system = repository.findById(systemId)
         system.group = consumerGroupRepository.findById(groupId)
         repository.save(system)
+        sessionSender.sendMessage(ConsumerGroupsChanged())
     }
 
     fun findByManufacturerAndSerialNumber(manufacturer: String, serialNumber: String): BatterySystemDto {

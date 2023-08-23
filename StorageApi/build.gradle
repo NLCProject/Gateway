@@ -46,6 +46,7 @@ repositories {
 dependencies {
     implementation project(':Utils')
     implementation project(':Storage')
+    implementation project(':WebsocketInternalApi')
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
     implementation("mysql:mysql-connector-java:${mySqlVersion}")
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'

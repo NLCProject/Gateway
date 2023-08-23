@@ -5,10 +5,7 @@ import kotlinx.coroutines.runBlocking
 import org.gateway.utils.serialzation.JsonSerialization
 import org.gateway.websocketApi.session.PublicSessionHandler
 import org.gateway.websocketInternalApi.dto.WebsocketMessage
-import org.gateway.websocketInternalApi.messages.SystemDetected
-import org.gateway.websocketInternalApi.messages.SystemRegistered
-import org.gateway.websocketInternalApi.messages.SystemStatusChanged
-import org.gateway.websocketInternalApi.messages.VoltageMeasurement
+import org.gateway.websocketInternalApi.messages.*
 import org.gateway.websocketInternalApi.messages.helper.MessageType
 import org.gateway.websocketInternalApi.session.InternalSessionHandler
 import org.slf4j.LoggerFactory
@@ -18,6 +15,13 @@ import org.springframework.stereotype.Service
 class InternalWebsocketSessionSender : JsonSerialization() {
 
     private val logger = LoggerFactory.getLogger(this::class.java)
+
+    fun sendMessage(message: ConsumerGroupsChanged) {
+        WebsocketMessage(type = MessageType.ConsumerGroupsChanged).apply {
+            val serialized = encode(message)
+            sendToPublicSessions(serialized = serialized)
+        }
+    }
 
     fun sendMessage(message: SystemDetected) {
         WebsocketMessage(type = MessageType.SystemDetected).apply {
