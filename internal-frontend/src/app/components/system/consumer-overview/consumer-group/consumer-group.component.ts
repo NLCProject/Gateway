@@ -3,7 +3,6 @@ import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ConsumerGroupService} from '../../../../services/rest/consumer-group.service';
 import {TranslationService} from '../../../../services/translation/translation.service';
-import {ActivatedRoute} from '@angular/router';
 import {WiringMode} from '../../../../dto/WiringMode';
 
 @Component({
@@ -15,7 +14,6 @@ export class ConsumerGroupComponent implements OnInit {
 
   constructor(
     private service: ConsumerGroupService,
-    private activatedRoute: ActivatedRoute,
     private formBuilder: UntypedFormBuilder,
     private translationService: TranslationService,
     private dialogRef: MatDialogRef<ConsumerGroupComponent>,

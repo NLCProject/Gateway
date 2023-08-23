@@ -1,6 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {ConsumerGroupService} from "../../../../services/rest/consumer-group.service";
-import {ActivatedRoute} from "@angular/router";
 import {UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
 import {TranslationService} from "../../../../services/translation/translation.service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
@@ -17,7 +16,6 @@ export class GroupSelectionComponent implements OnInit {
   constructor(
     private systemService: SystemService,
     private service: ConsumerGroupService,
-    private activatedRoute: ActivatedRoute,
     private formBuilder: UntypedFormBuilder,
     private translationService: TranslationService,
     private dialogRef: MatDialogRef<GroupSelectionComponent>,

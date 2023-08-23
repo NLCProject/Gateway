@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TranslationService} from '../../../services/translation/translation.service';
-import {SystemValue} from '../../../dto/SystemValue';
 import {ConsumerGroupService} from '../../../services/rest/consumer-group.service';
 import { ConsumerMode } from 'src/app/dto/ConsumerMode';
 import {ConsumerGroupDto} from '../../../dto/ConsumerGroupDto';
@@ -12,7 +11,7 @@ import {MatDialog} from '@angular/material/dialog';
   templateUrl: './consumer-overview.component.html',
   styleUrls: ['./consumer-overview.component.scss']
 })
-export class ConsumerOverviewComponent implements OnInit {
+export class ConsumerOverviewComponent implements OnInit, OnDestroy {
 
   constructor(
     private dialog: MatDialog,
@@ -22,7 +21,6 @@ export class ConsumerOverviewComponent implements OnInit {
 
   private interval: any = null;
   public loading = true;
-  public values: SystemValue[] = [];
   public ConsumerMode = ConsumerMode;
   public groups: ConsumerGroupDto[] = [];
 
