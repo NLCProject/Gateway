@@ -38,16 +38,6 @@ class BatterySystemService @Autowired constructor(
         sessionSender.sendMessage(ConsumerGroupsChanged())
     }
 
-    fun findByManufacturerAndSerialNumber(manufacturer: String, serialNumber: String): BatterySystemDto {
-        if (manufacturer.isEmpty() && serialNumber.isEmpty())
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid parameters", null)
-
-        return repository
-            .findBySerialNumberAndManufacturer(serialNumber = serialNumber, manufacturer = manufacturer)
-            .let { if (it.isPresent) BatterySystemConverter.convert(entity = it.get()) else null }
-            ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "System not found", null)
-    }
-
     fun findAll(): List<BatterySystemDto> = repository
         .findAll()
         .map { BatterySystemConverter.convert(entity = it) }

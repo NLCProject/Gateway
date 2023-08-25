@@ -32,7 +32,4 @@ class VoltageMeasurementRepository @Autowired constructor(
         VoltageMeasurement(serialNumber = serialNumber, manufacturer = manufacturer, value = value)
             .apply { sessionSender.sendMessage(message = this) }
     }
-
-    fun getLatestBySerialNumber(serialNumber: String): Optional<VoltageMeasurementEntity> =
-        repository.getFirstBySerialNumberOrderByTimestampCreatedDesc(serialNumber)
 }

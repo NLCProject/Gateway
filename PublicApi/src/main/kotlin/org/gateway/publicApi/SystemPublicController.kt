@@ -21,12 +21,4 @@ class SystemPublicController @Autowired constructor(
     fun findAll(): ResponseEntity<*> = ControllerCallback.getOperation {
         batterySystemService.findAll()
     }
-
-    @GetMapping(value = ["/findByManufacturerAndSerialNumber"])
-    fun findByManufacturerAndSerialNumber(
-        @RequestParam manufacturer: String,
-        @RequestParam serialNumber: String
-    ): ResponseEntity<*> = ControllerCallback.getOperation {
-        batterySystemService.findByManufacturerAndSerialNumber(manufacturer = manufacturer, serialNumber = serialNumber)
-    }
 }
