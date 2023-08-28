@@ -4,45 +4,58 @@ object VirtualBatteries {
 
     val clients = listOf(
         VirtualBattery(
-            voltage = 5.3,
-            lowerDispersion = 0.99,
-            upperDispersion = 1.01,
-            manufacturer = "Joy-It"
-        ),
-
-        VirtualBattery(
-            voltage = 9.1,
-            manufacturer = "Varta",
-            lowerDispersion = 0.98,
-            upperDispersion = 1.03
-        ),
-
-        VirtualBattery(
-            voltage = 20.8,
-            lowerDispersion = 0.995,
-            upperDispersion = 1.005,
-            manufacturer = "Duracell"
-        ),
-
-        VirtualBattery(
-            voltage = 10.0,
-            lowerDispersion = 0.992,
-            upperDispersion = 1.01,
+            voltage = 8.79,
+            lowerDispersion = 0.999,
+            upperDispersion = 1.001,
             manufacturer = "LG Energy Solution"
         ),
-
         VirtualBattery(
-            voltage = 4.7,
-            lowerDispersion = 0.995,
-            upperDispersion = 1.005,
+            voltage = 8.84,
+            lowerDispersion = 0.999,
+            upperDispersion = 1.001,
+            manufacturer = "LG Energy Solution"
+        ),
+        VirtualBattery(
+            voltage = 8.76,
+            lowerDispersion = 0.999,
+            upperDispersion = 1.001,
+            manufacturer = "LG Energy Solution"
+        ),
+        VirtualBattery(
+            voltage = 9.02,
+            lowerDispersion = 0.999,
+            upperDispersion = 1.001,
+            manufacturer = "LG Energy Solution"
+        ),
+        VirtualBattery(
+            voltage = 8.06,
+            lowerDispersion = 0.999,
+            upperDispersion = 1.001,
+            manufacturer = "LG Energy Solution"
+        ),
+        VirtualBattery(
+            voltage = 8.45,
+            lowerDispersion = 0.999,
+            upperDispersion = 1.001,
             manufacturer = "Panasonic"
         ),
-
         VirtualBattery(
-            voltage = 15.6,
-            lowerDispersion = 0.99,
-            upperDispersion = 1.02,
-            manufacturer = "Samsung SDI"
+            voltage = 1.49,
+            lowerDispersion = 0.999,
+            upperDispersion = 1.001,
+            manufacturer = "Panasonic"
+        ),
+        VirtualBattery(
+            voltage = 1.52,
+            lowerDispersion = 0.999,
+            upperDispersion = 1.001,
+            manufacturer = "Panasonic"
+        ),
+        VirtualBattery(
+            voltage = 1.42,
+            lowerDispersion = 0.999,
+            upperDispersion = 1.001,
+            manufacturer = "Panasonic"
         )
     )
 }
